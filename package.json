@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prepare": "husky"
+  },
+	"dependencies": {
+		"@tailwindcss/postcss": "^4.1.13",
+		"axios": "^1.11.0",
+		"next": "^15.5.2",
+		"postcss": "^8.5.6",
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1",
+		"sonner": "^2.0.7",
+		"tailwindcss": "^4.1.13"
+	},
+	"devDependencies": {
+		"@types/node": "^24.3.1"
+	}
+}
