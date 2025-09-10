@@ -6,17 +6,30 @@
     "lint": "next lint",
     "prepare": "husky"
   },
-	"dependencies": {
-		"@tailwindcss/postcss": "^4.1.13",
-		"axios": "^1.11.0",
-		"next": "^15.5.2",
-		"postcss": "^8.5.6",
-		"react": "^19.1.1",
-		"react-dom": "^19.1.1",
-		"sonner": "^2.0.7",
-		"tailwindcss": "^4.1.13"
-	},
-	"devDependencies": {
-		"@types/node": "^24.3.1"
-	}
+  "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/react-avatar": "^1.1.10",
+    "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-separator": "^1.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@tailwindcss/postcss": "^4.1.13",
+    "axios": "^1.11.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "husky": "^9.1.7",
+    "lucide-react": "^0.543.0",
+    "next": "^15.5.2",
+    "next-themes": "^0.4.6",
+    "postcss": "^8.5.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1",
+    "@types/react": "19.1.12",
+    "typescript": "5.9.2"
+  }
 }
