@@ -1,9 +1,11 @@
 import { Navbar } from '@/components/navbar';
-import { Inter, Lato } from 'next/font/google';
+import { Inter, Lato, Poppins, Lora } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 const lato = Lato({ subsets: ['latin'], weight: ['400', '700', '900'] });
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] });
+const lora = Lora({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 export const metadata = {
   title: 'Cirebon Kota - Pemerintah Kota Cirebon',
@@ -22,6 +24,8 @@ export default function RootLayout({
         style={{
           '--font-inter': inter.style.fontFamily,
           '--font-lato': lato.style.fontFamily,
+          '--font-poppins': poppins.style.fontFamily,
+          '--font-lora': lora.style.fontFamily,
         } as React.CSSProperties}
       >
         <Navbar />

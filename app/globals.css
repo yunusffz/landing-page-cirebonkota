@@ -20,11 +20,14 @@
   --color-border: #e2e8f0;
   --color-input: #e2e8f0;
   --color-ring: #3b82f6;
+  --color-main: #1e40af;
   --radius: 0.5rem;
   
   /* Font families */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-lato: var(--font-lato), ui-sans-serif, system-ui, sans-serif;
+  --font-poppins: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-lora: var(--font-lora), ui-serif, serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -48,5 +51,6 @@
     --color-border: #1e293b;
     --color-input: #1e293b;
     --color-ring: #60a5fa;
+    --color-main: #3b82f6;
   }
 }

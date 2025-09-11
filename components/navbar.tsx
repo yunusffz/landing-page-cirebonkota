@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface NavbarProps {
@@ -23,21 +22,13 @@ export function Navbar({ className }: NavbarProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { label: 'Beranda', href: '#home' },
-    { label: 'Tentang', href: '#about' },
-    { label: 'Layanan', href: '#services' },
-    { label: 'Berita', href: '#news' },
-    { label: 'Kontak', href: '#contact' },
-  ];
-
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white',
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200/50'
-          : 'bg-transparent',
+          ? 'drop-shadow'
+          : '',
         className
       )}
     >
@@ -55,40 +46,28 @@ export function Navbar({ className }: NavbarProps) {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-extrabold text-gray-700 mt-1 font-lato">
+               <span className="text-lg font-bold text-gray-700 mt-1 font-poppins">
                EKOSISTEM DATA KOTA CIREBON
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* CTA Button */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-blue-600 text-blue-600 hover:bg-blue-50"
+          {/* Desktop Options */}
+          <div className="hidden lg:flex items-center space-x-8 font-extrabold">
+            <Link
+              href="#open-data"
+              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-lato text-sm uppercase tracking-wide"
             >
-              Portal Warga
-            </Button>
-            <Button
-              size="sm"
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              <Image src="/logo-gray.png" alt="Open Data" width={40} height={40} />
+              <span className='mt-1'>Open Data</span>
+            </Link>
+            <Link
+              href="#satu-data"
+              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-lato text-sm uppercase tracking-wide"
             >
-              Layanan Online
-            </Button>
+              <Image src="/logo-gray.png" alt="Open Data" width={40} height={40} />
+              <span className='mt-1'>Satu Data</span>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -125,31 +104,24 @@ export function Navbar({ className }: NavbarProps) {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="lg:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-md rounded-lg mt-2 shadow-lg border border-gray-200/50">
-              {navItems.map((item) => (
+            <div className="px-2 pt-2 pb-3 space-y-1  backdrop-blur-md rounded-lg mt-2 shadow-lg border border-gray-200/50">
+              <div className="pt-4 pb-2 space-y-3">
                 <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors duration-200 font-medium"
+                  href="#open-data"
+                  className="flex items-center space-x-3 px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors duration-200 font-lato text-sm uppercase tracking-wide"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {item.label}
+                  <Image src="/logo-gray.png" alt="Open Data" width={40} height={40} />
+                  <span>Open Data</span>
                 </Link>
-              ))}
-              <div className="pt-4 pb-2 space-y-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
+                <Link
+                  href="#satu-data"
+                  className="flex items-center space-x-3 px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors duration-200 font-lato text-sm uppercase tracking-wide"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Portal Warga
-                </Button>
-                <Button
-                  size="sm"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                >
-                  Layanan Online
-                </Button>
+                  <Image src="/logo-gray.png" alt="Open Data" width={40} height={40} />
+                  <span>Satu Data</span>
+                </Link>
               </div>
             </div>
           </div>
