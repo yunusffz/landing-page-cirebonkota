@@ -55,6 +55,7 @@ export default function OpenDataSection() {
 
   return (
     <MotionSection
+      id="open-data"
       className="bg-[#2E91DB] relative min-h-screen"
       style={{ height: sectionHeight }}
       initial="hidden"

@@ -51,6 +51,7 @@ export default function SatuDataSection() {
 
   return (
     <MotionSection
+      id="satu-data"
       className="bg-[#2E91DB] relative"
       style={{ height: sectionHeight }}
       initial="hidden"

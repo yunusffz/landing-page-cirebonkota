@@ -12,14 +12,124 @@ interface NavbarProps {
 export function Navbar({ className }: NavbarProps) {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [activeSection, setActiveSection] = React.useState<string>('');
 
   React.useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
+
+      // Fallback scroll-based section detection
+      const openDataSection = document.getElementById('open-data');
+      const satuDataSection = document.getElementById('satu-data');
+
+      // If we're at the very top (hero section), clear active section
+      if (window.scrollY < 50) {
+        setActiveSection('');
+        return;
+      }
+
+      if (openDataSection && satuDataSection) {
+        const openDataRect = openDataSection.getBoundingClientRect();
+        const satuDataRect = satuDataSection.getBoundingClientRect();
+
+        // Check which section is more visible - only activate if section is significantly in view
+        const openDataVisible =
+          openDataRect.top < window.innerHeight * 0.3 &&
+          openDataRect.bottom > window.innerHeight * 0.3;
+        const satuDataVisible =
+          satuDataRect.top < window.innerHeight * 0.3 &&
+          satuDataRect.bottom > window.innerHeight * 0.3;
+
+        if (satuDataVisible) {
+          setActiveSection('satu-data');
+        } else if (openDataVisible) {
+          setActiveSection('open-data');
+        } else {
+          // If neither section is significantly visible, clear active section
+          setActiveSection('');
+        }
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Intersection Observer for active section detection
+  React.useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-10% 0px -10% 0px',
+      threshold: 0.5,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      let hasIntersectingSection = false;
+
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          console.log('Active section:', sectionId); // Debug log
+          setActiveSection(sectionId);
+          hasIntersectingSection = true;
+        }
+      });
+
+      // If no section is intersecting and we're near the top, clear active section
+      if (!hasIntersectingSection && window.scrollY < 100) {
+        setActiveSection('');
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions
+    );
+
+    // Use MutationObserver to watch for when sections are added
+    const mutationObserver = new MutationObserver(() => {
+      const openDataSection = document.getElementById('open-data');
+      const satuDataSection = document.getElementById('satu-data');
+
+      if (openDataSection && !openDataSection.hasAttribute('data-observed')) {
+        observer.observe(openDataSection);
+        openDataSection.setAttribute('data-observed', 'true');
+        console.log('Open Data section observed');
+      }
+
+      if (satuDataSection && !satuDataSection.hasAttribute('data-observed')) {
+        observer.observe(satuDataSection);
+        satuDataSection.setAttribute('data-observed', 'true');
+        console.log('Satu Data section observed');
+      }
+    });
+
+    // Start observing the document body for changes
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    // Also try immediately
+    const openDataSection = document.getElementById('open-data');
+    const satuDataSection = document.getElementById('satu-data');
+
+    if (openDataSection) {
+      observer.observe(openDataSection);
+      openDataSection.setAttribute('data-observed', 'true');
+    }
+    if (satuDataSection) {
+      observer.observe(satuDataSection);
+      satuDataSection.setAttribute('data-observed', 'true');
+    }
+
+    return () => {
+      mutationObserver.disconnect();
+      const openDataSection = document.getElementById('open-data');
+      const satuDataSection = document.getElementById('satu-data');
+      if (openDataSection) observer.unobserve(openDataSection);
+      if (satuDataSection) observer.unobserve(satuDataSection);
+    };
   }, []);
 
   return (
@@ -54,26 +164,75 @@ export function Navbar({ className }: NavbarProps) {
           <div className="hidden lg:flex items-center space-x-8 font-extrabold">
             <Link
               href="#open-data"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-lato text-sm uppercase tracking-wide"
+              className={cn(
+                'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
+                activeSection === 'open-data'
+                  ? 'text-blue-600'
+                  : 'text-gray-700 hover:text-blue-600'
+              )}
             >
-              <Image
-                src="/logo-gray.png"
-                alt="Open Data"
-                width={40}
-                height={40}
-              />
+              <svg
+                width={24}
+                height={24}
+                viewBox="0 0 40 40"
+                className="cursor-pointer transition-colors duration-200"
+              >
+                <rect
+                  x="4"
+                  y="4"
+                  width="32"
+                  height="32"
+                  rx="8"
+                  fill={activeSection === 'open-data' ? '#1976D2' : '#9ca3af'}
+                  stroke={activeSection === 'open-data' ? '#1d4ed8' : '#6b7280'}
+                  strokeWidth="2"
+                  className="transition-colors duration-200"
+                />
+                <rect
+                  x="12"
+                  y="12"
+                  width="16"
+                  height="16"
+                  rx="4"
+                  fill={activeSection === 'open-data' ? '#ffffff' : '#e5e7eb'}
+                  className="transition-colors duration-200"
+                />
+              </svg>
+
               <span className="mt-1">Open Data</span>
             </Link>
             <Link
               href="#satu-data"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-lato text-sm uppercase tracking-wide"
+              className={cn(
+                'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
+                activeSection === 'satu-data'
+                  ? 'text-blue-600'
+                  : 'text-gray-700 hover:text-blue-600'
+              )}
             >
-              <Image
-                src="/logo-gray.png"
-                alt="Open Data"
-                width={40}
-                height={40}
-              />
+              <svg
+                width={24}
+                height={24}
+                viewBox="0 0 40 40"
+                className="cursor-pointer transition-colors duration-200"
+              >
+                <circle
+                  cx="20"
+                  cy="20"
+                  r="18"
+                  fill={activeSection === 'satu-data' ? '#1976D2' : '#9ca3af'}
+                  stroke={activeSection === 'satu-data' ? '#1d4ed8' : '#6b7280'}
+                  strokeWidth="2"
+                  className="transition-colors duration-200"
+                />
+                <circle
+                  cx="20"
+                  cy="20"
+                  r="8"
+                  fill={activeSection === 'satu-data' ? '#ffffff' : '#e5e7eb'}
+                  className="transition-colors duration-200"
+                />
+              </svg>
               <span className="mt-1">Satu Data</span>
             </Link>
           </div>
@@ -116,28 +275,88 @@ export function Navbar({ className }: NavbarProps) {
               <div className="pt-4 pb-2 space-y-3">
                 <Link
                   href="#open-data"
-                  className="flex items-center space-x-3 px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors duration-200 font-lato text-sm uppercase tracking-wide"
+                  className={cn(
+                    'flex items-center space-x-3 px-3 py-2 hover:bg-blue-50 rounded-md transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
+                    activeSection === 'open-data'
+                      ? 'text-blue-600 bg-blue-50'
+                      : 'text-gray-700 hover:text-blue-600'
+                  )}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Image
-                    src="/logo-gray.png"
-                    alt="Open Data"
-                    width={40}
-                    height={40}
-                  />
+                  <svg
+                    width={24}
+                    height={24}
+                    viewBox="0 0 40 40"
+                    className="cursor-pointer transition-colors duration-200"
+                  >
+                    <rect
+                      x="4"
+                      y="4"
+                      width="32"
+                      height="32"
+                      rx="8"
+                      fill={
+                        activeSection === 'open-data' ? '#1976D2' : '#9ca3af'
+                      }
+                      stroke={
+                        activeSection === 'open-data' ? '#1d4ed8' : '#6b7280'
+                      }
+                      strokeWidth="2"
+                      className="transition-colors duration-200"
+                    />
+                    <rect
+                      x="12"
+                      y="12"
+                      width="16"
+                      height="16"
+                      rx="4"
+                      fill={
+                        activeSection === 'open-data' ? '#ffffff' : '#e5e7eb'
+                      }
+                      className="transition-colors duration-200"
+                    />
+                  </svg>
                   <span>Open Data</span>
                 </Link>
                 <Link
                   href="#satu-data"
-                  className="flex items-center space-x-3 px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors duration-200 font-lato text-sm uppercase tracking-wide"
+                  className={cn(
+                    'flex items-center space-x-3 px-3 py-2 hover:bg-blue-50 rounded-md transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
+                    activeSection === 'satu-data'
+                      ? 'text-blue-600 bg-blue-50'
+                      : 'text-gray-700 hover:text-blue-600'
+                  )}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Image
-                    src="/logo-gray.png"
-                    alt="Open Data"
-                    width={40}
-                    height={40}
-                  />
+                  <svg
+                    width={24}
+                    height={24}
+                    viewBox="0 0 40 40"
+                    className="cursor-pointer transition-colors duration-200"
+                  >
+                    <circle
+                      cx="20"
+                      cy="20"
+                      r="18"
+                      fill={
+                        activeSection === 'satu-data' ? '#1976D2' : '#9ca3af'
+                      }
+                      stroke={
+                        activeSection === 'satu-data' ? '#1d4ed8' : '#6b7280'
+                      }
+                      strokeWidth="2"
+                      className="transition-colors duration-200"
+                    />
+                    <circle
+                      cx="20"
+                      cy="20"
+                      r="8"
+                      fill={
+                        activeSection === 'satu-data' ? '#ffffff' : '#e5e7eb'
+                      }
+                      className="transition-colors duration-200"
+                    />
+                  </svg>
                   <span>Satu Data</span>
                 </Link>
               </div>
