@@ -1,28 +1,11 @@
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosRequestHeaders,
-  AxiosResponse,
-} from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { toast } from "sonner";
+import { toast } from 'sonner';
 
 // API Configuration
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 const API_TIMEOUT = 10000; // 10 seconds
-
-// Create a separate axios instance for auth operations (without response interceptor)
-const authClient: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: API_TIMEOUT,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-// Flag to prevent multiple simultaneous refresh attempts
-let isRefreshing = false;
 // Response interceptor for error handling
 const responseInterceptor = (response: AxiosResponse) => {
   return response;
@@ -30,7 +13,7 @@ const responseInterceptor = (response: AxiosResponse) => {
 
 const responseErrorInterceptor = async (error: unknown) => {
   // Handle common error cases
-  if (error && typeof error === "object" && "response" in error) {
+  if (error && typeof error === 'object' && 'response' in error) {
     const { status, data } = error.response as {
       status: number;
       data: unknown;
@@ -40,22 +23,22 @@ const responseErrorInterceptor = async (error: unknown) => {
       case 403:
         // Forbidden
         toast.error(
-          "Access forbidden. You do not have permission to perform this action."
+          'Access forbidden. You do not have permission to perform this action.'
         );
         break;
       case 404:
         // Not found
         toast.error(
-          "Resource not found. Please check your request and try again."
+          'Resource not found. Please check your request and try again.'
         );
         break;
       case 422:
-        let validationMessage = "Validation error occurred";
+        let validationMessage = 'Validation error occurred';
         if (
-          typeof data === "object" &&
+          typeof data === 'object' &&
           data !== null &&
-          "message" in data &&
-          typeof (data as { message?: unknown }).message === "string"
+          'message' in data &&
+          typeof (data as { message?: unknown }).message === 'string'
         ) {
           validationMessage = (data as { message: string }).message;
         }
@@ -63,16 +46,16 @@ const responseErrorInterceptor = async (error: unknown) => {
         break;
       case 500:
         // Server error
-        toast.error("Server error occurred. Please try again later.");
+        toast.error('Server error occurred. Please try again later.');
         break;
       default:
         // Other HTTP errors
         let errorMessage: string;
         if (
-          typeof data === "object" &&
+          typeof data === 'object' &&
           data !== null &&
-          "message" in data &&
-          typeof (data as { message?: unknown }).message === "string"
+          'message' in data &&
+          typeof (data as { message?: unknown }).message === 'string'
         ) {
           errorMessage = (data as { message: string }).message;
         } else {
@@ -80,15 +63,15 @@ const responseErrorInterceptor = async (error: unknown) => {
         }
         toast.error(errorMessage);
     }
-  } else if (error && typeof error === "object" && "request" in error) {
+  } else if (error && typeof error === 'object' && 'request' in error) {
     // Network error
     toast.error(
-      "Network error. Please check your internet connection and try again."
+      'Network error. Please check your internet connection and try again.'
     );
   } else {
     // Other error
     toast.error(
-      error instanceof Error ? error.message : "An unexpected error occurred"
+      error instanceof Error ? error.message : 'An unexpected error occurred'
     );
   }
 
@@ -100,7 +83,7 @@ const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: API_TIMEOUT,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
@@ -167,13 +150,13 @@ export class ApiService {
     config?: AxiosRequestConfig
   ): Promise<T> {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append('file', file);
 
     const response = await this.client.post<T>(url, formData, {
       ...config,
       headers: {
         ...config?.headers,
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     });
     return response.data;
