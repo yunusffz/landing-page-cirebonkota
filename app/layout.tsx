@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/navbar';
+import { QueryProvider } from '@/lib/query-provider';
 import { Inter, Lato, Lora, Poppins } from 'next/font/google';
 import './globals.css';
 
@@ -34,8 +35,10 @@ export default function RootLayout({
           } as React.CSSProperties
         }
       >
-        <Navbar />
-        <main className="pt-16 lg:pt-20">{children}</main>
+        <QueryProvider>
+          <Navbar />
+          <main className="pt-16 lg:pt-20">{children}</main>
+        </QueryProvider>
       </body>
     </html>
   );

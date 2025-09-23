@@ -1,4 +1,15 @@
 'use client';
+import {
+  AnimatedText,
+  MotionDiv,
+  MotionP,
+  MotionSection,
+  fadeInLeftVariants,
+  fadeInRightVariants,
+  fadeInUpVariants,
+  scaleInVariants,
+  staggerContainerVariants,
+} from '@/components/ui/motion';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
@@ -39,31 +50,53 @@ export default function SatuDataSection() {
   }, []);
 
   return (
-    <section
+    <MotionSection
       className="bg-[#2E91DB] relative"
       style={{ height: sectionHeight }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={staggerContainerVariants}
     >
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 h-full">
           {/* Static Content */}
-          <div className="sticky top-20 flex flex-col justify-center h-screen">
+          <MotionDiv
+            className="sticky top-20 flex flex-col justify-center h-screen"
+            variants={fadeInLeftVariants}
+          >
             <div className="space-y-6">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 font-lora">
-                Satu Data
-              </h2>
-              <p className="text-lg text-gray-900 font-inter leading-relaxed">
+              <AnimatedText
+                text="Satu Data"
+                className="text-4xl lg:text-5xl font-bold text-gray-900 font-lora"
+                delay={0.2}
+              />
+              <MotionP
+                className="text-lg text-gray-900 font-inter leading-relaxed"
+                variants={fadeInUpVariants}
+                transition={{ delay: 0.4 }}
+              >
                 Platform terintegrasi yang menyatukan seluruh data pemerintah
                 Kota Cirebon dalam satu ekosistem yang mudah diakses dan
                 dipahami. Dengan prinsip "Satu Data", kami memastikan
                 konsistensi, akurasi, dan transparansi informasi publik.
-              </p>
+              </MotionP>
             </div>
-          </div>
+          </MotionDiv>
 
           {/* Scrolling images */}
-          <div ref={imagesContainerRef} className="space-y-20 pt-16 pb-16">
+          <MotionDiv
+            ref={imagesContainerRef}
+            className="space-y-20 pt-16 pb-16"
+            variants={fadeInRightVariants}
+            transition={{ delay: 0.6 }}
+          >
             {/* First image */}
-            <div className="rounded-2xl overflow-hidden">
+            <MotionDiv
+              className="rounded-2xl overflow-hidden"
+              variants={scaleInVariants}
+              transition={{ delay: 0.8 }}
+            >
               <Image
                 src="/beranda-opendata.png"
                 alt="Open Data Portal Cirebon"
@@ -71,10 +104,14 @@ export default function SatuDataSection() {
                 height={600}
                 className="w-full h-auto"
               />
-            </div>
+            </MotionDiv>
 
             {/* Second image */}
-            <div className="rounded-xl overflow-hidden">
+            <MotionDiv
+              className="rounded-xl overflow-hidden"
+              variants={scaleInVariants}
+              transition={{ delay: 1.0 }}
+            >
               <Image
                 src="/vector-4.png"
                 alt="Data Visualization"
@@ -82,10 +119,14 @@ export default function SatuDataSection() {
                 height={500}
                 className="w-full h-auto"
               />
-            </div>
+            </MotionDiv>
 
             {/* Third image */}
-            <div className="rounded-xl overflow-hidden">
+            <MotionDiv
+              className="rounded-xl overflow-hidden"
+              variants={scaleInVariants}
+              transition={{ delay: 1.2 }}
+            >
               <Image
                 src="/quality-data.png"
                 alt="Data Analysis"
@@ -93,10 +134,10 @@ export default function SatuDataSection() {
                 height={500}
                 className="w-full h-auto"
               />
-            </div>
-          </div>
+            </MotionDiv>
+          </MotionDiv>
         </div>
       </div>
-    </section>
+    </MotionSection>
   );
 }
