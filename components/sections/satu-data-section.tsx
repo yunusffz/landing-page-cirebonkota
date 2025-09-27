@@ -52,7 +52,7 @@ export default function SatuDataSection() {
   return (
     <MotionSection
       id="satu-data"
-      className="bg-[#6de0f6] relative text-gray-900"
+      className="bg-[#6de0f6] relative min-h-screen text-gray-900"
       style={{ height: sectionHeight }}
       initial="hidden"
       whileInView="visible"
@@ -60,7 +60,69 @@ export default function SatuDataSection() {
       variants={staggerContainerVariants}
     >
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 h-full">
+        <div className="lg:hidden">
+          <MotionDiv
+            className="sticky top-20 flex flex-col py-16 h-screen"
+            variants={fadeInLeftVariants}
+          >
+            <div className="space-y-6 overflow-hidden">
+              <AnimatedText
+                text="Satu Data"
+                className="text-4xl lg:text-5xl font-bold font-lora"
+                delay={0.2}
+              />
+              <MotionP
+                className="text-lg font-inter leading-relaxed text-[#0f172a]"
+                variants={fadeInUpVariants}
+                transition={{ delay: 0.4 }}
+              >
+                Portal Satu Data adalah platform terpadu untuk memperkuat tata
+                kelola data. Kami memastikan integrasi dan standarisasi data ,
+                sehingga menghasilkan data yang berkualitas, andal, dan siap
+                digunakan untuk analisis yang akurat.
+              </MotionP>
+
+              {/* CTA Button */}
+              <MotionDiv
+                className="mt-8"
+                variants={fadeInUpVariants}
+                transition={{ delay: 0.6 }}
+              >
+                <a
+                  href="https://satudata.cirebonkota.go.id/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-white text-[#3ca7bd] font-semibold rounded-lg hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <span>Kunjungi Portal Satu Data</span>
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
+              </MotionDiv>
+
+              <Image
+                src="/beranda-satudata.png"
+                alt="Satu Data Portal Cirebon"
+                width={800}
+                height={300}
+                className="w-full h-auto"
+              />
+            </div>
+          </MotionDiv>
+        </div>
+        <div className="lg:grid-cols-2 gap-8 lg:gap-12 h-full hidden lg:grid">
           {/* Static Content */}
           <MotionDiv
             className="sticky top-20 flex flex-col justify-center h-screen"
@@ -115,7 +177,7 @@ export default function SatuDataSection() {
             </div>
           </MotionDiv>
 
-          {/* Scrolling images */}
+          {/* Desktop Scrolling images - visible lg and above */}
           <MotionDiv
             ref={imagesContainerRef}
             className="space-y-20 pt-16 pb-16"
