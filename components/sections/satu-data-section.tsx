@@ -52,7 +52,7 @@ export default function SatuDataSection() {
   return (
     <MotionSection
       id="satu-data"
-      className="bg-[#2E91DB] relative"
+      className="bg-[#6de0f6] relative text-gray-900"
       style={{ height: sectionHeight }}
       initial="hidden"
       whileInView="visible"
@@ -69,19 +69,49 @@ export default function SatuDataSection() {
             <div className="space-y-6">
               <AnimatedText
                 text="Satu Data"
-                className="text-4xl lg:text-5xl font-bold text-gray-900 font-lora"
+                className="text-4xl lg:text-5xl font-bold font-lora"
                 delay={0.2}
               />
               <MotionP
-                className="text-lg text-gray-900 font-inter leading-relaxed"
+                className="text-lg font-inter leading-relaxed text-[#0f172a]"
                 variants={fadeInUpVariants}
                 transition={{ delay: 0.4 }}
               >
-                Platform terintegrasi yang menyatukan seluruh data pemerintah
-                Kota Cirebon dalam satu ekosistem yang mudah diakses dan
-                dipahami. Dengan prinsip "Satu Data", kami memastikan
-                konsistensi, akurasi, dan transparansi informasi publik.
+                Portal Satu Data adalah platform terpadu untuk memperkuat tata
+                kelola data. Kami memastikan integrasi dan standarisasi data ,
+                sehingga menghasilkan data yang berkualitas, andal, dan siap
+                digunakan untuk analisis yang akurat.
               </MotionP>
+
+              {/* CTA Button */}
+              <MotionDiv
+                className="mt-8"
+                variants={fadeInUpVariants}
+                transition={{ delay: 0.6 }}
+              >
+                <a
+                  href="https://satudata.cirebonkota.go.id/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3  bg-white text-[#3ca7bd] font-semibold rounded-lg hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <span>Kunjungi Portal Satu Data</span>
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
+              </MotionDiv>
             </div>
           </MotionDiv>
 
@@ -99,7 +129,7 @@ export default function SatuDataSection() {
               transition={{ delay: 0.8 }}
             >
               <Image
-                src="/beranda-opendata.png"
+                src="/beranda-satudata.png"
                 alt="Open Data Portal Cirebon"
                 width={800}
                 height={600}
@@ -114,7 +144,7 @@ export default function SatuDataSection() {
               transition={{ delay: 1.0 }}
             >
               <Image
-                src="/vector-4.png"
+                src="/satudata-1.png"
                 alt="Data Visualization"
                 width={800}
                 height={500}
@@ -129,7 +159,7 @@ export default function SatuDataSection() {
               transition={{ delay: 1.2 }}
             >
               <Image
-                src="/quality-data.png"
+                src="/satudata-2.png"
                 alt="Data Analysis"
                 width={800}
                 height={500}
