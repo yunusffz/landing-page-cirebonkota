@@ -10,7 +10,7 @@ import {
   scaleInVariants,
   staggerContainerVariants,
 } from '@/components/ui/motion';
-import Finance from '@/public/Finance.json';
+import Finance from '@/public/artboard.json';
 import Lottie from 'lottie-react';
 
 export default function HeroSection() {
