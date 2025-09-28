@@ -1,3 +1,4 @@
+import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { QueryProvider } from '@/lib/query-provider';
 import { Inter, Lato, Lora, Poppins } from 'next/font/google';
@@ -38,6 +39,7 @@ export default function RootLayout({
         <QueryProvider>
           <Navbar />
           <main className="pt-16 lg:pt-20">{children}</main>
+          <Footer />
         </QueryProvider>
       </body>
     </html>

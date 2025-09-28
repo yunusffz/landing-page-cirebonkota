@@ -62,7 +62,7 @@ export default function SatuDataSection() {
 
   return (
     <MotionSection
-      id="satu-data"
+      id="satu-peta"
       className="bg-[#fdcd47] relative min-h-screen text-gray-900"
       style={{ height: sectionHeight }}
       initial="hidden"
@@ -93,11 +93,7 @@ export default function SatuDataSection() {
                 akurat.
               </MotionP>
 
-              <MotionDiv
-                className="mt-6"
-                variants={fadeInUpVariants}
-                transition={{ delay: 0.6 }}
-              >
+              <div className="mt-6">
                 {mapsetsLoading ? (
                   <div className="text-gray-300 text-sm">Memuat data...</div>
                 ) : mapsetsError ? (
@@ -106,27 +102,21 @@ export default function SatuDataSection() {
                   </div>
                 ) : mapsetsData ? (
                   <div className="grid gap-4">
-                    {mapsetsData && (
-                      <MotionDiv
-                        className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20"
-                        variants={scaleInVariants}
-                        transition={{ delay: 0.8 }}
-                      >
-                        <div className="text-center">
-                          <div className="text-3xl font-bold text-gray-900 mb-2">
-                            {mapsetsData.data.count.toLocaleString('id-ID')}
-                          </div>
-                          <div className="text-sm text-gray-900">Mapset</div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                      <div className="text-center">
+                        <div className="text-3xl font-bold text-gray-900 mb-2">
+                          {mapsetsData.data.count.toLocaleString('id-ID')}
                         </div>
-                      </MotionDiv>
-                    )}
+                        <div className="text-sm text-gray-900">Mapset</div>
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <div className="text-gray-300 text-sm">
                     Tidak ada data tersedia
                   </div>
                 )}
-              </MotionDiv>
+              </div>
 
               {/* CTA Button */}
               <MotionDiv
@@ -204,20 +194,14 @@ export default function SatuDataSection() {
                   </div>
                 ) : mapsetsData ? (
                   <div className="grid gap-4">
-                    {mapsetsData && (
-                      <MotionDiv
-                        className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20"
-                        variants={scaleInVariants}
-                        transition={{ delay: 0.8 }}
-                      >
-                        <div className="text-center">
-                          <div className="text-3xl font-bold text-gray-900 mb-2">
-                            {mapsetsData.data.count.toLocaleString('id-ID')}
-                          </div>
-                          <div className="text-sm text-gray-900">Mapset</div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                      <div className="text-center">
+                        <div className="text-3xl font-bold text-gray-900 mb-2">
+                          {mapsetsData.data.count.toLocaleString('id-ID')}
                         </div>
-                      </MotionDiv>
-                    )}
+                        <div className="text-sm text-gray-900">Mapset</div>
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <div className="text-gray-300 text-sm">

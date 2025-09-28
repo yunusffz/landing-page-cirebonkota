@@ -14,6 +14,24 @@ export function Navbar({ className }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [activeSection, setActiveSection] = React.useState<string>('');
 
+  // Smooth scroll handler for navigation links
+  const handleSmoothScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string
+  ) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      const headerHeight = 80; // Account for fixed header height
+      const targetPosition = targetElement.offsetTop - headerHeight;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   React.useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -21,6 +39,7 @@ export function Navbar({ className }: NavbarProps) {
       // Fallback scroll-based section detection
       const openDataSection = document.getElementById('open-data');
       const satuDataSection = document.getElementById('satu-data');
+      const satuPetaSection = document.getElementById('satu-peta');
 
       // If we're at the very top (hero section), clear active section
       if (window.scrollY < 50) {
@@ -28,9 +47,10 @@ export function Navbar({ className }: NavbarProps) {
         return;
       }
 
-      if (openDataSection && satuDataSection) {
+      if (openDataSection && satuDataSection && satuPetaSection) {
         const openDataRect = openDataSection.getBoundingClientRect();
         const satuDataRect = satuDataSection.getBoundingClientRect();
+        const satuPetaRect = satuPetaSection.getBoundingClientRect();
 
         // Check which section is more visible - only activate if section is significantly in view
         const openDataVisible =
@@ -39,13 +59,18 @@ export function Navbar({ className }: NavbarProps) {
         const satuDataVisible =
           satuDataRect.top < window.innerHeight * 0.3 &&
           satuDataRect.bottom > window.innerHeight * 0.3;
+        const satuPetaVisible =
+          satuPetaRect.top < window.innerHeight * 0.3 &&
+          satuPetaRect.bottom > window.innerHeight * 0.3;
 
-        if (satuDataVisible) {
+        if (satuPetaVisible) {
+          setActiveSection('satu-peta');
+        } else if (satuDataVisible) {
           setActiveSection('satu-data');
         } else if (openDataVisible) {
           setActiveSection('open-data');
         } else {
-          // If neither section is significantly visible, clear active section
+          // If no section is significantly visible, clear active section
           setActiveSection('');
         }
       }
@@ -90,6 +115,7 @@ export function Navbar({ className }: NavbarProps) {
     const mutationObserver = new MutationObserver(() => {
       const openDataSection = document.getElementById('open-data');
       const satuDataSection = document.getElementById('satu-data');
+      const satuPetaSection = document.getElementById('satu-peta');
 
       if (openDataSection && !openDataSection.hasAttribute('data-observed')) {
         observer.observe(openDataSection);
@@ -102,6 +128,12 @@ export function Navbar({ className }: NavbarProps) {
         satuDataSection.setAttribute('data-observed', 'true');
         console.log('Satu Data section observed');
       }
+
+      if (satuPetaSection && !satuPetaSection.hasAttribute('data-observed')) {
+        observer.observe(satuPetaSection);
+        satuPetaSection.setAttribute('data-observed', 'true');
+        console.log('Satu Peta section observed');
+      }
     });
 
     // Start observing the document body for changes
@@ -113,6 +145,7 @@ export function Navbar({ className }: NavbarProps) {
     // Also try immediately
     const openDataSection = document.getElementById('open-data');
     const satuDataSection = document.getElementById('satu-data');
+    const satuPetaSection = document.getElementById('satu-peta');
 
     if (openDataSection) {
       observer.observe(openDataSection);
@@ -122,13 +155,19 @@ export function Navbar({ className }: NavbarProps) {
       observer.observe(satuDataSection);
       satuDataSection.setAttribute('data-observed', 'true');
     }
+    if (satuPetaSection) {
+      observer.observe(satuPetaSection);
+      satuPetaSection.setAttribute('data-observed', 'true');
+    }
 
     return () => {
       mutationObserver.disconnect();
       const openDataSection = document.getElementById('open-data');
       const satuDataSection = document.getElementById('satu-data');
+      const satuPetaSection = document.getElementById('satu-peta');
       if (openDataSection) observer.unobserve(openDataSection);
       if (satuDataSection) observer.unobserve(satuDataSection);
+      if (satuPetaSection) observer.unobserve(satuPetaSection);
     };
   }, []);
 
@@ -164,6 +203,7 @@ export function Navbar({ className }: NavbarProps) {
           <div className="hidden lg:flex items-center space-x-8 font-extrabold">
             <Link
               href="#open-data"
+              onClick={e => handleSmoothScroll(e, 'open-data')}
               className={cn(
                 'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
                 activeSection === 'open-data'
@@ -203,6 +243,7 @@ export function Navbar({ className }: NavbarProps) {
             </Link>
             <Link
               href="#satu-data"
+              onClick={e => handleSmoothScroll(e, 'satu-data')}
               className={cn(
                 'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
                 activeSection === 'satu-data'
@@ -234,6 +275,37 @@ export function Navbar({ className }: NavbarProps) {
                 />
               </svg>
               <span className="mt-1">Satu Data</span>
+            </Link>
+            <Link
+              href="#satu-peta"
+              onClick={e => handleSmoothScroll(e, 'satu-peta')}
+              className={cn(
+                'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
+                activeSection === 'satu-peta'
+                  ? 'text-blue-600'
+                  : 'text-gray-700 hover:text-blue-600'
+              )}
+            >
+              <svg
+                width={24}
+                height={24}
+                viewBox="0 0 40 40"
+                className="cursor-pointer transition-colors duration-200"
+              >
+                <path
+                  d="M20 4L4 20h16v16h16V20h16L20 4z"
+                  fill={activeSection === 'satu-peta' ? '#1976D2' : '#9ca3af'}
+                  stroke={activeSection === 'satu-peta' ? '#1d4ed8' : '#6b7280'}
+                  strokeWidth="2"
+                  className="transition-colors duration-200"
+                />
+                <path
+                  d="M20 12L12 20h8v8h8V20h8L20 12z"
+                  fill={activeSection === 'satu-peta' ? '#ffffff' : '#e5e7eb'}
+                  className="transition-colors duration-200"
+                />
+              </svg>
+              <span className="mt-1">Satu Peta</span>
             </Link>
           </div>
 
@@ -275,13 +347,16 @@ export function Navbar({ className }: NavbarProps) {
               <div className="pt-4 pb-2 space-y-3">
                 <Link
                   href="#open-data"
+                  onClick={e => {
+                    handleSmoothScroll(e, 'open-data');
+                    setIsMobileMenuOpen(false);
+                  }}
                   className={cn(
                     'flex items-center space-x-3 px-3 py-2 hover:bg-blue-50 rounded-md transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
                     activeSection === 'open-data'
                       ? 'text-blue-600 bg-blue-50'
                       : 'text-gray-700 hover:text-blue-600'
                   )}
-                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <svg
                     width={24}
@@ -320,13 +395,16 @@ export function Navbar({ className }: NavbarProps) {
                 </Link>
                 <Link
                   href="#satu-data"
+                  onClick={e => {
+                    handleSmoothScroll(e, 'satu-data');
+                    setIsMobileMenuOpen(false);
+                  }}
                   className={cn(
                     'flex items-center space-x-3 px-3 py-2 hover:bg-blue-50 rounded-md transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
                     activeSection === 'satu-data'
                       ? 'text-blue-600 bg-blue-50'
                       : 'text-gray-700 hover:text-blue-600'
                   )}
-                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <svg
                     width={24}
@@ -358,6 +436,46 @@ export function Navbar({ className }: NavbarProps) {
                     />
                   </svg>
                   <span>Satu Data</span>
+                </Link>
+                <Link
+                  href="#satu-peta"
+                  onClick={e => {
+                    handleSmoothScroll(e, 'satu-peta');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={cn(
+                    'flex items-center space-x-3 px-3 py-2 hover:bg-blue-50 rounded-md transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
+                    activeSection === 'satu-peta'
+                      ? 'text-blue-600 bg-blue-50'
+                      : 'text-gray-700 hover:text-blue-600'
+                  )}
+                >
+                  <svg
+                    width={24}
+                    height={24}
+                    viewBox="0 0 40 40"
+                    className="cursor-pointer transition-colors duration-200"
+                  >
+                    <path
+                      d="M20 4L4 20h16v16h16V20h16L20 4z"
+                      fill={
+                        activeSection === 'satu-peta' ? '#1976D2' : '#9ca3af'
+                      }
+                      stroke={
+                        activeSection === 'satu-peta' ? '#1d4ed8' : '#6b7280'
+                      }
+                      strokeWidth="2"
+                      className="transition-colors duration-200"
+                    />
+                    <path
+                      d="M20 12L12 20h8v8h8V20h8L20 12z"
+                      fill={
+                        activeSection === 'satu-peta' ? '#ffffff' : '#e5e7eb'
+                      }
+                      className="transition-colors duration-200"
+                    />
+                  </svg>
+                  <span>Satu Peta</span>
                 </Link>
               </div>
             </div>

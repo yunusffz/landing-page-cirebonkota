@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
 @theme {
   --color-background: #ffffff;
   --color-foreground: #0f172a;
