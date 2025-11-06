@@ -28,28 +28,16 @@ export default function OpenDataSection() {
         setSectionHeight(`${height}px`);
       }
     };
-
-    // Update height on mount
     updateHeight();
-
-    // Update height on window resize
     window.addEventListener('resize', updateHeight);
-
-    // Update height when images load
     const images = imagesContainerRef.current?.querySelectorAll('img');
-    if (images) {
-      images.forEach(img => {
-        img.addEventListener('load', updateHeight);
-      });
-    }
+    if (images)
+      images.forEach(img => img.addEventListener('load', updateHeight));
 
     return () => {
       window.removeEventListener('resize', updateHeight);
-      if (images) {
-        images.forEach(img => {
-          img.removeEventListener('load', updateHeight);
-        });
-      }
+      if (images)
+        images.forEach(img => img.removeEventListener('load', updateHeight));
     };
   }, []);
 
@@ -73,9 +61,10 @@ export default function OpenDataSection() {
           margin-top: 1rem;
         }
       `}</style>
+
       <MotionSection
         id="open-data"
-        className="bg-[#2E91DB] relative min-h-screen"
+        className="relative min-h-screen bg-data-700"
         style={{ height: sectionHeight }}
         initial="hidden"
         whileInView="visible"
@@ -83,6 +72,7 @@ export default function OpenDataSection() {
         variants={staggerContainerVariants}
       >
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+          {/* Mobile layout */}
           <div className="lg:hidden">
             <MotionDiv
               className="sticky top-20 flex flex-col py-16 h-screen"
@@ -90,12 +80,12 @@ export default function OpenDataSection() {
             >
               <div className="space-y-6 overflow-hidden">
                 <AnimatedText
-                  text="Open Data"
-                  className="text-4xl lg:text-5xl font-bold text-[#F9FAFB] font-lora"
+                  text="Open Data Kota Cirebon"
+                  className="text-4xl lg:text-5xl font-bold text-neutral-50 font-lora"
                   delay={0.2}
                 />
                 <MotionP
-                  className="text-lg text-gray-200 font-inter leading-relaxed"
+                  className="text-lg text-neutral-100 font-inter leading-relaxed"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.4 }}
                 >
@@ -114,29 +104,32 @@ export default function OpenDataSection() {
                   transition={{ delay: 0.6 }}
                 >
                   {datasetsLoading || articlesLoading ? (
-                    <div className="text-gray-300 text-sm">Memuat data...</div>
+                    <div className="text-neutral-200 text-sm">
+                      Memuat data...
+                    </div>
                   ) : datasetsData || articlesData ? (
                     <div className="grid grid-cols-2 gap-4">
-                      {/* Dataset Count */}
                       {datasetsData && (
-                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                        <div className="bg-neutral-50/10 backdrop-blur-sm rounded-lg p-4 border border-neutral-100/20">
                           <div className="text-center">
-                            <div className="text-3xl font-bold text-white mb-2">
+                            <div className="text-3xl font-bold text-neutral-50 mb-2">
                               {datasetsData.data.count.toLocaleString('id-ID')}
                             </div>
-                            <div className="text-sm text-gray-200">Dataset</div>
+                            <div className="text-sm text-neutral-100">
+                              Dataset
+                            </div>
                           </div>
                         </div>
                       )}
-
-                      {/* Article Count */}
                       {articlesData && (
-                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                        <div className="bg-neutral-50/10 backdrop-blur-sm rounded-lg p-4 border border-neutral-100/20">
                           <div className="text-center">
-                            <div className="text-3xl font-bold text-white mb-2">
+                            <div className="text-3xl font-bold text-neutral-50 mb-2">
                               {articlesData.data.count.toLocaleString('id-ID')}
                             </div>
-                            <div className="text-sm text-gray-200">Artikel</div>
+                            <div className="text-sm text-neutral-100">
+                              Artikel
+                            </div>
                           </div>
                         </div>
                       )}
@@ -154,7 +147,7 @@ export default function OpenDataSection() {
                     href="https://opendata.cirebonkota.go.id/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center px-6 py-3 bg-white text-[#2E91DB] font-semibold rounded-lg hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+                    className="inline-flex items-center px-6 py-3 rounded-lg font-semibold bg-neutral-50 text-data-700 hover:bg-shrimp-400 hover:text-white shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-200"
                   >
                     <span>Kunjungi Portal Open Data</span>
                     <svg
@@ -184,69 +177,72 @@ export default function OpenDataSection() {
               </div>
             </MotionDiv>
           </div>
+
+          {/* Desktop layout */}
           <div className="lg:grid-cols-2 gap-8 lg:gap-12 h-full hidden lg:grid">
-            {/* Static Content */}
             <MotionDiv
               className="sticky top-20 flex flex-col justify-center h-screen"
               variants={fadeInLeftVariants}
             >
               <div className="space-y-6">
                 <AnimatedText
-                  text="Open Data"
-                  className="text-4xl lg:text-5xl font-bold text-[#F9FAFB] font-lora"
+                  text="Open Data Kota Cirebon"
+                  className="text-5xl font-bold text-neutral-50 font-lora"
                   delay={0.2}
                 />
                 <MotionP
-                  className="text-lg text-gray-200 font-inter leading-relaxed"
+                  className="text-lg text-neutral-100 font-inter leading-relaxed"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.4 }}
                 >
-                  Portal data terbuka yang menghadirkan berbagai informasi
-                  publik Pemerintah Kota Cirebon secara mudah diakses,
-                  transparan, dan dapat dimanfaatkan oleh siapa saja. Dengan
-                  prinsip keterbukaan informasi, Open Data mendorong partisipasi
-                  masyarakat, mendukung penelitian, serta membuka peluang
-                  inovasi dan kolaborasi berbasis data.
+                  Cirebon Satu Data merupakan portal data terbuka dan informasi
+                  publik bagi warga Kota Cirebon. Melalui portal ini, siapa pun
+                  dapat menjelajahi dan mengunduh berbagai data terbuka dari
+                  Organisasi Perangkat Daerah serta instansi lainnya di Kota
+                  Cirebon.
                 </MotionP>
 
-                {/* Dataset and Article Count Display */}
+                {/* Stats */}
                 <MotionDiv
                   className="mt-6"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.6 }}
                 >
                   {datasetsLoading || articlesLoading ? (
-                    <div className="text-gray-300 text-sm">Memuat data...</div>
+                    <div className="text-neutral-200 text-sm">
+                      Memuat data...
+                    </div>
                   ) : datasetsData || articlesData ? (
                     <div className="grid grid-cols-2 gap-4">
-                      {/* Dataset Count */}
                       {datasetsData && (
                         <MotionDiv
-                          className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20"
+                          className="bg-neutral-50/10 backdrop-blur-sm rounded-lg p-4 border border-neutral-100/20"
                           variants={scaleInVariants}
                           transition={{ delay: 0.8 }}
                         >
                           <div className="text-center">
-                            <div className="text-3xl font-bold text-white mb-2">
+                            <div className="text-3xl font-bold text-neutral-50 mb-2">
                               {datasetsData.data.count.toLocaleString('id-ID')}
                             </div>
-                            <div className="text-sm text-gray-200">Dataset</div>
+                            <div className="text-sm text-neutral-100">
+                              Dataset
+                            </div>
                           </div>
                         </MotionDiv>
                       )}
-
-                      {/* Article Count */}
                       {articlesData && (
                         <MotionDiv
-                          className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20"
+                          className="bg-neutral-50/10 backdrop-blur-sm rounded-lg p-4 border border-neutral-100/20"
                           variants={scaleInVariants}
                           transition={{ delay: 1.0 }}
                         >
                           <div className="text-center">
-                            <div className="text-3xl font-bold text-white mb-2">
+                            <div className="text-3xl font-bold text-neutral-50 mb-2">
                               {articlesData.data.count.toLocaleString('id-ID')}
                             </div>
-                            <div className="text-sm text-gray-200">Artikel</div>
+                            <div className="text-sm text-neutral-100">
+                              Artikel
+                            </div>
                           </div>
                         </MotionDiv>
                       )}
@@ -264,7 +260,7 @@ export default function OpenDataSection() {
                     href="https://opendata.cirebonkota.go.id/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center px-6 py-3 bg-white text-[#2E91DB] font-semibold rounded-lg hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+                    className="inline-flex items-center px-6 py-3 rounded-lg font-semibold bg-neutral-50 text-data-700 hover:bg-shrimp-400 hover:text-white shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-200"
                   >
                     <span>Kunjungi Portal Open Data</span>
                     <svg
@@ -286,18 +282,16 @@ export default function OpenDataSection() {
               </div>
             </MotionDiv>
 
-            {/* Desktop Scrolling images - visible lg and above */}
+            {/* Right images */}
             <MotionDiv
               ref={imagesContainerRef}
               className="space-y-20 pt-16 pb-16"
               variants={fadeInRightVariants}
               transition={{ delay: 0.8 }}
             >
-              {/* First image */}
               <MotionDiv
                 className="rounded-2xl overflow-hidden"
                 variants={scaleInVariants}
-                transition={{ delay: 1.0 }}
               >
                 <Image
                   src="/beranda-opendata.png"
@@ -307,12 +301,9 @@ export default function OpenDataSection() {
                   className="w-full h-auto"
                 />
               </MotionDiv>
-
-              {/* Second image */}
               <MotionDiv
                 className="rounded-xl overflow-hidden"
                 variants={scaleInVariants}
-                transition={{ delay: 1.2 }}
               >
                 <Image
                   src="/free-access.png"
@@ -322,12 +313,9 @@ export default function OpenDataSection() {
                   className="w-full h-auto"
                 />
               </MotionDiv>
-
-              {/* Third image */}
               <MotionDiv
                 className="rounded-xl overflow-hidden"
                 variants={scaleInVariants}
-                transition={{ delay: 1.4 }}
               >
                 <Image
                   src="/quality-data.png"

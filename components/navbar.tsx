@@ -1,6 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import * as React from 'react';
@@ -120,19 +121,16 @@ export function Navbar({ className }: NavbarProps) {
       if (openDataSection && !openDataSection.hasAttribute('data-observed')) {
         observer.observe(openDataSection);
         openDataSection.setAttribute('data-observed', 'true');
-        console.log('Open Data section observed');
       }
 
       if (satuDataSection && !satuDataSection.hasAttribute('data-observed')) {
         observer.observe(satuDataSection);
         satuDataSection.setAttribute('data-observed', 'true');
-        console.log('Satu Data section observed');
       }
 
       if (satuPetaSection && !satuPetaSection.hasAttribute('data-observed')) {
         observer.observe(satuPetaSection);
         satuPetaSection.setAttribute('data-observed', 'true');
-        console.log('Satu Peta section observed');
       }
     });
 
@@ -174,8 +172,8 @@ export function Navbar({ className }: NavbarProps) {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white',
-        isScrolled ? 'drop-shadow' : '',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white ',
+        isScrolled ? 'drop-shadow bg-white' : '',
         className
       )}
     >
@@ -194,7 +192,7 @@ export function Navbar({ className }: NavbarProps) {
             </div>
             <div className="flex flex-col">
               <span className="text-lg font-bold text-gray-700 mt-1 font-poppins">
-                EKOSISTEM DATA KOTA CIREBON
+                CIREBON SATU DATA
               </span>
             </div>
           </Link>
@@ -205,39 +203,21 @@ export function Navbar({ className }: NavbarProps) {
               href="#open-data"
               onClick={e => handleSmoothScroll(e, 'open-data')}
               className={cn(
-                'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
+                'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide group',
                 activeSection === 'open-data'
-                  ? 'text-blue-600'
-                  : 'text-gray-700 hover:text-blue-600'
+                  ? 'text-shrimp-400'
+                  : 'text-gray-700 hover:text-shrimp-400'
               )}
             >
-              <svg
-                width={24}
-                height={24}
-                viewBox="0 0 40 40"
-                className="cursor-pointer transition-colors duration-200"
-              >
-                <rect
-                  x="4"
-                  y="4"
-                  width="32"
-                  height="32"
-                  rx="8"
-                  fill={activeSection === 'open-data' ? '#1976D2' : '#9ca3af'}
-                  stroke={activeSection === 'open-data' ? '#1d4ed8' : '#6b7280'}
-                  strokeWidth="2"
-                  className="transition-colors duration-200"
-                />
-                <rect
-                  x="12"
-                  y="12"
-                  width="16"
-                  height="16"
-                  rx="4"
-                  fill={activeSection === 'open-data' ? '#ffffff' : '#e5e7eb'}
-                  className="transition-colors duration-200"
-                />
-              </svg>
+              <Icon
+                icon="mdi:database-outline"
+                className={cn(
+                  'w-5 h-5 transition-colors',
+                  activeSection === 'open-data'
+                    ? 'text-shrimp-400'
+                    : 'text-gray-500 group-hover:text-shrimp-400'
+                )}
+              />
 
               <span className="mt-1">Open Data</span>
             </Link>
@@ -245,73 +225,51 @@ export function Navbar({ className }: NavbarProps) {
               href="#satu-data"
               onClick={e => handleSmoothScroll(e, 'satu-data')}
               className={cn(
-                'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
+                'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide group',
                 activeSection === 'satu-data'
-                  ? 'text-blue-600'
-                  : 'text-gray-700 hover:text-blue-600'
+                  ? 'text-shrimp-400'
+                  : 'text-gray-700 hover:text-shrimp-400'
               )}
             >
-              <svg
-                width={24}
-                height={24}
-                viewBox="0 0 40 40"
-                className="cursor-pointer transition-colors duration-200"
-              >
-                <circle
-                  cx="20"
-                  cy="20"
-                  r="18"
-                  fill={activeSection === 'satu-data' ? '#1976D2' : '#9ca3af'}
-                  stroke={activeSection === 'satu-data' ? '#1d4ed8' : '#6b7280'}
-                  strokeWidth="2"
-                  className="transition-colors duration-200"
-                />
-                <circle
-                  cx="20"
-                  cy="20"
-                  r="8"
-                  fill={activeSection === 'satu-data' ? '#ffffff' : '#e5e7eb'}
-                  className="transition-colors duration-200"
-                />
-              </svg>
+              <Icon
+                icon="ph:network"
+                className={cn(
+                  'w-5 h-5 transition-colors',
+                  activeSection === 'satu-data'
+                    ? 'text-shrimp-400'
+                    : 'text-gray-500 group-hover:text-shrimp-400'
+                )}
+              />
+
               <span className="mt-1">Satu Data</span>
             </Link>
             <Link
               href="#satu-peta"
               onClick={e => handleSmoothScroll(e, 'satu-peta')}
               className={cn(
-                'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
+                'flex items-center space-x-2 transition-colors duration-200 font-lato text-sm uppercase tracking-wide group',
                 activeSection === 'satu-peta'
-                  ? 'text-blue-600'
-                  : 'text-gray-700 hover:text-blue-600'
+                  ? 'text-shrimp-400'
+                  : 'text-gray-700 hover:text-shrimp-400'
               )}
             >
-              <svg
-                width={24}
-                height={24}
-                viewBox="0 0 40 40"
-                className="cursor-pointer transition-colors duration-200"
-              >
-                <path
-                  d="M20 4L4 20h16v16h16V20h16L20 4z"
-                  fill={activeSection === 'satu-peta' ? '#1976D2' : '#9ca3af'}
-                  stroke={activeSection === 'satu-peta' ? '#1d4ed8' : '#6b7280'}
-                  strokeWidth="2"
-                  className="transition-colors duration-200"
-                />
-                <path
-                  d="M20 12L12 20h8v8h8V20h8L20 12z"
-                  fill={activeSection === 'satu-peta' ? '#ffffff' : '#e5e7eb'}
-                  className="transition-colors duration-200"
-                />
-              </svg>
+              <Icon
+                icon="mdi:map-outline"
+                className={cn(
+                  'w-5 h-5 transition-colors',
+                  activeSection === 'satu-peta'
+                    ? 'text-shrimp-400'
+                    : 'text-gray-500 group-hover:text-shrimp-400'
+                )}
+              />
+
               <span className="mt-1">Satu Peta</span>
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition-colors"
+            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-shrimp-400 hover:bg-gray-100 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
           >
@@ -354,8 +312,8 @@ export function Navbar({ className }: NavbarProps) {
                   className={cn(
                     'flex items-center space-x-3 px-3 py-2 hover:bg-blue-50 rounded-md transition-colors duration-200 font-lato text-sm uppercase tracking-wide',
                     activeSection === 'open-data'
-                      ? 'text-blue-600 bg-blue-50'
-                      : 'text-gray-700 hover:text-blue-600'
+                      ? 'text-shrimp-400 bg-blue-50'
+                      : 'text-gray-700 hover:text-shrimp-400'
                   )}
                 >
                   <svg

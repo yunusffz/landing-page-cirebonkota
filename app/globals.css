@@ -27,7 +27,67 @@ html {
   --color-ring: #3b82f6;
   --color-main: #1e40af;
   --radius: 0.5rem;
-  
+
+  /* Custom color palettes - Warna utama (dari logo udang) */
+  --color-shrimp-50: #FFF0F6;
+  --color-shrimp-100: #FFD9E9;
+  --color-shrimp-200: #FFB3D3;
+  --color-shrimp-300: #FF8CBE;
+  --color-shrimp-400: #FF6FAF;
+  --color-shrimp-500: #FF4F9E;
+  --color-shrimp-600: #E23A88;
+  --color-shrimp-700: #B9266E;
+  --color-shrimp-800: #891A52;
+  --color-shrimp-900: #5A1038;
+
+  /* Warna data (dari teks SD di logo) */
+  --color-data-50: #E9FAFE;
+  --color-data-100: #C6F3FB;
+  --color-data-200: #9FE9F9;
+  --color-data-300: #76DFF8;
+  --color-data-400: #5EDFFF;
+  --color-data-500: #37C7EA;
+  --color-data-600: #20A7CA;
+  --color-data-700: #1584A1;
+  --color-data-800: #106278;
+  --color-data-900: #0A4354;
+
+  /* Warna biru tua (untuk teks & header) */
+  --color-navy-50: #E7EEF6;
+  --color-navy-100: #C8D7EA;
+  --color-navy-200: #A3BBDD;
+  --color-navy-300: #7C9FD0;
+  --color-navy-400: #4E7CBF;
+  --color-navy-500: #245BAA;
+  --color-navy-600: #1A4A8A;
+  --color-navy-700: #163E58;
+  --color-navy-800: #102A3C;
+  --color-navy-900: #081724;
+
+  /* Warna netral */
+  --color-neutral-50: #F9FCFD;
+  --color-neutral-100: #EFF6F8;
+  --color-neutral-200: #E0EAEC;
+  --color-neutral-300: #CBD5D8;
+  --color-neutral-400: #9CAEB5;
+  --color-neutral-500: #6B7E85;
+  --color-neutral-600: #4D6067;
+  --color-neutral-700: #33434A;
+  --color-neutral-800: #1F2C31;
+  --color-neutral-900: #0A1A2F;
+
+  /* Aksen tambahan dari background section kuning */
+  --color-sunshine-50: #FFF8E0;
+  --color-sunshine-100: #FFF0B8;
+  --color-sunshine-200: #FFE47A;
+  --color-sunshine-300: #FFD83D;
+  --color-sunshine-400: #FFCA0A;
+  --color-sunshine-500: #E3B000;
+  --color-sunshine-600: #B78B00;
+  --color-sunshine-700: #8B6700;
+  --color-sunshine-800: #5F4400;
+  --color-sunshine-900: #332200;
+
   /* Font families */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-lato: var(--font-lato), ui-sans-serif, system-ui, sans-serif;
