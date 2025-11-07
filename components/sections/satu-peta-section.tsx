@@ -151,7 +151,7 @@ export default function SatuPetaSection() {
         {/* Desktop layout */}
         <div className="lg:grid-cols-2 gap-8 lg:gap-12 h-full hidden lg:grid">
           <MotionDiv
-            className="sticky top-20 flex flex-col justify-center h-screen"
+            className="sticky top-20 flex flex-col justify-center h-[calc(100vh-80px)]"
             variants={fadeInLeftVariants}
           >
             <div className="space-y-6">
@@ -237,12 +237,12 @@ export default function SatuPetaSection() {
           {/* Scrolling Images */}
           <MotionDiv
             ref={imagesContainerRef}
-            className="space-y-20 pt-16 pb-16"
+            className="space-y-40 flex flex-col pt-[calc(50vh-200px-40px)] pb-[calc(50vh-250px)]"
             variants={fadeInRightVariants}
             transition={{ delay: 0.6 }}
           >
             <MotionDiv
-              className="rounded-2xl overflow-hidden shadow-md"
+              className="rounded-2xl overflow-hidden h-[400px]"
               variants={scaleInVariants}
             >
               <Image
@@ -250,31 +250,31 @@ export default function SatuPetaSection() {
                 alt="Satu Peta Portal"
                 width={800}
                 height={600}
-                className="w-full h-auto"
+                className="w-full h-full"
               />
             </MotionDiv>
             <MotionDiv
-              className="rounded-xl overflow-hidden shadow-md"
+              className="rounded-xl overflow-hidden h-[500px]"
               variants={scaleInVariants}
             >
               <Image
-                src="/satupeta-1.png"
+                src="/satupet-1.png"
                 alt="Data Visualization"
                 width={800}
                 height={500}
-                className="w-full h-auto"
+                className="w-full h-full object-contain"
               />
             </MotionDiv>
             <MotionDiv
-              className="rounded-xl overflow-hidden shadow-md"
+              className="rounded-xl overflow-hidden h-[500px]"
               variants={scaleInVariants}
             >
               <Image
-                src="/satupeta-2.png"
+                src="/satupet-2.png"
                 alt="Data Analysis"
                 width={800}
                 height={500}
-                className="w-full h-auto"
+                className="w-full h-full object-contain"
               />
             </MotionDiv>
           </MotionDiv>

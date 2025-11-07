@@ -194,7 +194,7 @@ export default function SatuDataSection() {
               variants={scaleInVariants}
             >
               <Image
-                src="/satudat-1.png"
+                src="/satudata-12.png"
                 alt="Data Visualization"
                 width={1200}
                 height={800}
@@ -207,7 +207,7 @@ export default function SatuDataSection() {
               variants={scaleInVariants}
             >
               <Image
-                src="/satudat-2.png"
+                src="/satudat-3.png"
                 alt="Data Analysis"
                 width={800}
                 height={500}
