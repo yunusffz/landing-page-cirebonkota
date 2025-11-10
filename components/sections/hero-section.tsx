@@ -40,16 +40,16 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          {/* Left - Text */}
-          <MotionDiv variants={fadeInLeftVariants}>
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Text Content */}
+          <MotionDiv variants={fadeInLeftVariants} className="w-full">
             <AnimatedText
               text="Cirebon Satu Data"
-              className="text-[48px] lg:text-[56px] font-bold mb-6 font-lora text-navy-800"
+              className="text-[40px] sm:text-[48px] lg:text-[56px] font-bold mb-6 font-lora text-navy-800"
               delay={0.2}
             />
             <MotionP
-              className="mb-8 text-neutral-700 max-w-3xl font-inter leading-relaxed"
+              className="mb-8 text-neutral-700 max-w-3xl font-inter leading-relaxed text-base sm:text-lg"
               variants={fadeInUpVariants}
               transition={{ delay: 0.4 }}
             >
@@ -65,11 +65,11 @@ export default function HeroSection() {
             <MotionDiv variants={fadeInUpVariants} transition={{ delay: 0.6 }}>
               <a
                 href="#open-data"
-                className="inline-flex items-center px-6 py-3 rounded-lg font-semibold bg-shrimp-400 hover:bg-shrimp-500 text-neutral-50 shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-all duration-200"
+                className="inline-flex w-full text-center justify-center sm:w-[250px] items-center gap-3 px-8 py-4 rounded-xl font-semibold bg-gradient-to-r from-shrimp-400 to-shrimp-500 hover:from-shrimp-500 hover:to-shrimp-600 text-white shadow-[0_8px_24px_rgba(244,114,82,0.25)] hover:shadow-[0_12px_32px_rgba(244,114,82,0.35)] transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
               >
-                <span>Jelajahi Data</span>
+                <span className="text-base sm:text-lg">Jelajahi Data</span>
                 <svg
-                  className="ml-2 w-4 h-4"
+                  className="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -78,7 +78,7 @@ export default function HeroSection() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeWidth={2.5}
                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
@@ -86,14 +86,14 @@ export default function HeroSection() {
             </MotionDiv>
           </MotionDiv>
 
-          {/* Right - Lottie Animation */}
+          {/* Lottie Animation - Visible on all screens */}
           <MotionDiv
-            className="hidden lg:flex justify-center lg:justify-end"
+            className="flex justify-center lg:justify-end w-full mt-8 lg:mt-0"
             variants={fadeInRightVariants}
             transition={{ delay: 0.6 }}
           >
             <MotionDiv
-              className="w-full max-w-md lg:max-w-lg"
+              className="w-full max-w-sm sm:max-w-md lg:max-w-lg"
               variants={scaleInVariants}
               transition={{ delay: 0.8 }}
             >
