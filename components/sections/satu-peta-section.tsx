@@ -67,8 +67,8 @@ export default function SatuPetaSection() {
 
       <MotionSection
         id="satu-peta"
-        className="relative min-h-screen bg-gradient-to-br from-sunshine-100 via-sunshine-50 to-shrimp-100 text-navy-700"
-        style={{ height: sectionHeight }}
+        className="relative min-h-screen bg-gradient-to-br from-sunshine-100 via-sunshine-50 to-shrimp-100 text-navy-700 lg:h-auto"
+        style={{ height: typeof window !== 'undefined' && window.innerWidth >= 1024 ? sectionHeight : 'auto' }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -121,16 +121,17 @@ export default function SatuPetaSection() {
                     transition={{ delay: 0.4 }}
                   >
                     Portal data geospasial terpadu yang menyajikan informasi
-                    spasial Kota Cirebon secara akurat dan mudah diakses. Melalui
-                    portal ini, perangkat daerah dan masyarakat dapat menjelajahi,
-                    mengelola, serta berbagi data geospasial untuk mendukung
-                    perencanaan dan pengambilan kebijakan yang lebih terarah.
+                    spasial Kota Cirebon secara akurat dan mudah diakses.
+                    Melalui portal ini, perangkat daerah dan masyarakat dapat
+                    menjelajahi, mengelola, serta berbagi data geospasial untuk
+                    mendukung perencanaan dan pengambilan kebijakan yang lebih
+                    terarah.
                   </MotionP>
                 </div>
 
-                {/* Mapset Count - Enhanced Card */}
+                {/* Mapset Count - Infographic Style */}
                 <MotionDiv
-                  className="py-4"
+                  className="py-4 px-2"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.5 }}
                 >
@@ -143,29 +144,50 @@ export default function SatuPetaSection() {
                       Error: {mapsetsError.message}
                     </div>
                   ) : mapsetsData ? (
-                    <div className="relative overflow-hidden bg-gradient-to-br from-white/80 via-sunshine-50/50 to-shrimp-50/30 backdrop-blur-sm rounded-2xl p-8 border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.08)]">
+                    <div className="relative overflow-hidden bg-gradient-to-br from-white/80 via-sunshine-50/50 to-shrimp-50/30 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.08)] group hover:scale-[1.02] transition-transform duration-300">
                       {/* Decorative Elements */}
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-sunshine-300/20 rounded-full blur-2xl" />
-                      <div className="absolute bottom-0 left-0 w-24 h-24 bg-shrimp-300/20 rounded-full blur-2xl" />
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-sunshine-300/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
+                      <div className="absolute bottom-0 left-0 w-24 h-24 bg-shrimp-300/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
+                      <div className="absolute -bottom-4 -right-4 sm:-bottom-8 sm:-right-8 w-20 h-20 border-4 border-sunshine-400/20 rounded-full" />
 
-                      <div className="relative text-center space-y-2">
-                        <div className="text-5xl sm:text-6xl font-bold bg-gradient-to-br from-navy-700 via-navy-600 to-shrimp-600 bg-clip-text text-transparent">
-                          {mapsetsData.data.count.toLocaleString('id-ID')}
-                        </div>
-                        <div className="text-sm sm:text-base font-medium text-navy-600 tracking-wide uppercase">
-                          Mapset Tersedia
-                        </div>
-                        <div className="pt-2">
-                          <div className="inline-flex items-center gap-2 text-xs text-neutral-600 bg-white/60 px-4 py-2 rounded-full">
+                      <div className="relative space-y-3">
+                        {/* Icon */}
+                        <div className="flex justify-center">
+                          <div className="p-3 bg-shrimp-400/20 rounded-2xl backdrop-blur-sm border border-sunshine-300/30">
                             <svg
-                              className="w-4 h-4 text-shrimp-500"
+                              className="w-8 h-8 sm:w-10 sm:h-10 text-shrimp-500"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >
-                              <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                              <path
+                                fillRule="evenodd"
+                                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                clipRule="evenodd"
+                              />
                             </svg>
-                            <span>Data Geospasial Terpadu</span>
                           </div>
+                        </div>
+
+                        {/* Number */}
+                        <div className="text-center">
+                          <div className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-navy-700 via-navy-600 to-shrimp-600 bg-clip-text text-transparent leading-tight">
+                            {mapsetsData.data.count.toLocaleString('id-ID')}
+                          </div>
+                        </div>
+
+                        {/* Label */}
+                        <div className="text-center space-y-1">
+                          <div className="text-sm sm:text-base font-semibold text-navy-700 tracking-wide uppercase">
+                            Mapset
+                          </div>
+                          <div className="text-xs text-neutral-700/80">
+                            Data Geospasial Terpadu
+                          </div>
+                        </div>
+
+                        {/* Decorative Line */}
+                        <div className="flex justify-center pt-2">
+                          <div className="w-16 h-1 bg-gradient-to-r from-transparent via-shrimp-400/50 to-transparent rounded-full" />
                         </div>
                       </div>
                     </div>
@@ -188,7 +210,9 @@ export default function SatuPetaSection() {
                     rel="noopener noreferrer"
                     className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-shrimp-400 to-shrimp-500 hover:from-shrimp-500 hover:to-shrimp-600 text-white font-semibold rounded-xl shadow-[0_8px_24px_rgba(244,114,82,0.25)] hover:shadow-[0_12px_32px_rgba(244,114,82,0.35)] transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
                   >
-                    <span className="text-base sm:text-lg">Kunjungi Portal Satu Peta</span>
+                    <span className="text-base sm:text-lg">
+                      Kunjungi Portal Satu Peta
+                    </span>
                     <svg
                       className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
                       fill="none"
@@ -203,35 +227,6 @@ export default function SatuPetaSection() {
                       />
                     </svg>
                   </a>
-                </MotionDiv>
-
-                {/* Image Section - Enhanced */}
-                <MotionDiv
-                  className="pt-8 pb-4 px-1"
-                  variants={scaleInVariants}
-                  transition={{ delay: 0.8 }}
-                >
-                  <div className="relative group px-6 py-6">
-                    {/* Decorative background */}
-                    <div className="absolute -inset-4 bg-gradient-to-r from-sunshine-300/30 to-shrimp-300/30 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-300" />
-
-                    {/* Image container */}
-                    <div className="relative bg-white/40 backdrop-blur-sm rounded-2xl p-3 shadow-[0_12px_40px_rgba(0,0,0,0.12)]">
-                      <div className="overflow-hidden rounded-xl">
-                        <Image
-                          src="/beranda-satupeta.png"
-                          alt="Satu Peta Portal Cirebon"
-                          width={800}
-                          height={400}
-                          className="w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Corner decoration */}
-                    <div className="absolute -top-2 -right-2 w-20 h-20 border-4 border-sunshine-400/40 rounded-2xl rotate-12" />
-                    <div className="absolute -bottom-3 -left-3 w-16 h-16 bg-shrimp-400/20 rounded-full blur-md" />
-                  </div>
                 </MotionDiv>
               </div>
             </MotionDiv>
@@ -261,9 +256,9 @@ export default function SatuPetaSection() {
                   perencanaan dan pengambilan kebijakan yang lebih terarah.
                 </MotionP>
 
-                {/* Mapset Count */}
+                {/* Mapset Count - Infographic Style */}
                 <MotionDiv
-                  className="mt-6"
+                  className="mt-6 px-2"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.6 }}
                 >
@@ -276,13 +271,50 @@ export default function SatuPetaSection() {
                       Error: {mapsetsError.message}
                     </div>
                   ) : mapsetsData ? (
-                    <div className="grid gap-4">
-                      <div className="bg-neutral-50/60 rounded-lg p-4 border border-neutral-200 shadow-sm">
+                    <div className="relative overflow-hidden bg-gradient-to-br from-white/80 via-sunshine-50/50 to-shrimp-50/30 backdrop-blur-sm rounded-2xl p-6 border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.08)] group hover:scale-[1.02] transition-transform duration-300">
+                      {/* Decorative Elements */}
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-sunshine-300/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
+                      <div className="absolute bottom-0 left-0 w-20 h-20 bg-shrimp-300/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
+                      <div className="absolute -bottom-4 -right-4 w-16 h-16 border-4 border-sunshine-400/20 rounded-full" />
+
+                      <div className="relative space-y-3">
+                        {/* Icon */}
+                        <div className="flex justify-center">
+                          <div className="p-2.5 bg-shrimp-400/20 rounded-xl backdrop-blur-sm border border-sunshine-300/30">
+                            <svg
+                              className="w-7 h-7 text-shrimp-500"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+
+                        {/* Number */}
                         <div className="text-center">
-                          <div className="text-3xl font-bold text-navy-700 mb-2">
+                          <div className="text-4xl font-bold bg-gradient-to-br from-navy-700 via-navy-600 to-shrimp-600 bg-clip-text text-transparent leading-tight">
                             {mapsetsData.data.count.toLocaleString('id-ID')}
                           </div>
-                          <div className="text-sm text-navy-600">Mapset</div>
+                        </div>
+
+                        {/* Label */}
+                        <div className="text-center space-y-1">
+                          <div className="text-sm font-semibold text-navy-700 tracking-wide uppercase">
+                            Mapset
+                          </div>
+                          <div className="text-xs text-neutral-700/80">
+                            Data Geospasial
+                          </div>
+                        </div>
+
+                        {/* Decorative Line */}
+                        <div className="flex justify-center pt-1">
+                          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-shrimp-400/50 to-transparent rounded-full" />
                         </div>
                       </div>
                     </div>

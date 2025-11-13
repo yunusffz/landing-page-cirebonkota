@@ -10,8 +10,9 @@ import {
   scaleInVariants,
   staggerContainerVariants,
 } from '@/components/ui/motion';
-import { useArticles } from '@/queries/article/use-article-query';
 import { useDatasets } from '@/queries/datasets/use-datasets-query';
+import { useInfographics } from '@/queries/infographic/use-infographic-query';
+import { useVisualizations } from '@/queries/visualization/use-visualization-query';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
@@ -19,7 +20,10 @@ export default function OpenDataSection() {
   const imagesContainerRef = useRef<HTMLDivElement>(null);
   const [sectionHeight, setSectionHeight] = useState('1827px');
   const { data: datasetsData, isLoading: datasetsLoading } = useDatasets();
-  const { data: articlesData, isLoading: articlesLoading } = useArticles();
+  const { data: visualizationsData, isLoading: visualizationsLoading } =
+    useVisualizations();
+  const { data: infographicsData, isLoading: infographicsLoading } =
+    useInfographics();
 
   useEffect(() => {
     const updateHeight = () => {
@@ -81,8 +85,8 @@ export default function OpenDataSection() {
 
       <MotionSection
         id="open-data"
-        className="relative min-h-screen bg-gradient-to-br from-data-700 via-data-800 to-data-900"
-        style={{ height: sectionHeight }}
+        className="relative min-h-screen bg-gradient-to-br from-data-700 via-data-800 to-data-900 lg:h-auto"
+        style={{ height: typeof window !== 'undefined' && window.innerWidth >= 1024 ? sectionHeight : 'auto' }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -137,50 +141,163 @@ export default function OpenDataSection() {
                     Portal data terbuka yang menghadirkan berbagai informasi
                     publik Pemerintah Kota Cirebon secara mudah diakses,
                     transparan, dan dapat dimanfaatkan oleh siapa saja. Dengan
-                    prinsip keterbukaan informasi, Open Data mendorong partisipasi
-                    masyarakat, mendukung penelitian, serta membuka peluang
-                    inovasi dan kolaborasi berbasis data.
+                    prinsip keterbukaan informasi, Open Data mendorong
+                    partisipasi masyarakat, mendukung penelitian, serta membuka
+                    peluang inovasi dan kolaborasi berbasis data.
                   </MotionP>
                 </div>
 
-                {/* Dataset and Article Count Display - Enhanced */}
+                {/* Dataset, Visualization, and Infographic Count Display - Infographic Style */}
                 <MotionDiv
                   className="py-4"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.5 }}
                 >
-                  {datasetsLoading || articlesLoading ? (
+                  {datasetsLoading ||
+                  visualizationsLoading ||
+                  infographicsLoading ? (
                     <div className="text-neutral-200 text-sm bg-white/5 rounded-xl p-6 border border-neutral-100/10">
                       Memuat data...
                     </div>
-                  ) : datasetsData || articlesData ? (
-                    <div className="grid grid-cols-2 gap-4">
+                  ) : datasetsData || visualizationsData || infographicsData ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-2">
                       {datasetsData && (
-                        <div className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+                        <div className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300">
                           {/* Decorative Elements */}
-                          <div className="absolute top-0 right-0 w-20 h-20 bg-shrimp-400/20 rounded-full blur-xl" />
+                          <div className="absolute top-0 right-0 w-32 h-32 bg-shrimp-400/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
+                          <div className="absolute -bottom-4 -right-4 sm:-bottom-8 sm:-right-8 w-24 h-24 border-4 border-white/10 rounded-full" />
 
-                          <div className="relative text-center space-y-2">
-                            <div className="text-4xl sm:text-5xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-shrimp-200 bg-clip-text text-transparent">
-                              {datasetsData.data.count.toLocaleString('id-ID')}
+                          <div className="relative space-y-3">
+                            {/* Icon */}
+                            <div className="flex justify-center">
+                              <div className="p-3 bg-shrimp-400/20 rounded-2xl backdrop-blur-sm border border-white/20">
+                                <svg
+                                  className="w-8 h-8 sm:w-10 sm:h-10 text-shrimp-300"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z" />
+                                  <path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z" />
+                                  <path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z" />
+                                </svg>
+                              </div>
                             </div>
-                            <div className="text-xs sm:text-sm font-medium text-neutral-200 tracking-wide uppercase">
-                              Dataset
+
+                            {/* Number */}
+                            <div className="text-center">
+                              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-shrimp-200 bg-clip-text text-transparent leading-tight">
+                                {datasetsData.data.count.toLocaleString(
+                                  'id-ID'
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Label */}
+                            <div className="text-center space-y-1">
+                              <div className="text-sm sm:text-base font-semibold text-neutral-100 tracking-wide uppercase">
+                                Dataset
+                              </div>
+                              <div className="text-xs text-neutral-300/80">
+                                Data Terbuka Tersedia
+                              </div>
+                            </div>
+
+                            {/* Decorative Line */}
+                            <div className="flex justify-center pt-2">
+                              <div className="w-16 h-1 bg-gradient-to-r from-transparent via-shrimp-400/50 to-transparent rounded-full" />
                             </div>
                           </div>
                         </div>
                       )}
-                      {articlesData && (
-                        <div className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+                      {visualizationsData && (
+                        <div className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300">
                           {/* Decorative Elements */}
-                          <div className="absolute bottom-0 left-0 w-20 h-20 bg-sunshine-400/20 rounded-full blur-xl" />
+                          <div className="absolute bottom-0 left-0 w-32 h-32 bg-sunshine-400/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
+                          <div className="absolute -top-4 -left-4 sm:-top-8 sm:-left-8 w-24 h-24 border-4 border-white/10 rounded-full" />
 
-                          <div className="relative text-center space-y-2">
-                            <div className="text-4xl sm:text-5xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-sunshine-200 bg-clip-text text-transparent">
-                              {articlesData.data.count.toLocaleString('id-ID')}
+                          <div className="relative space-y-3">
+                            {/* Icon */}
+                            <div className="flex justify-center">
+                              <div className="p-3 bg-sunshine-400/20 rounded-2xl backdrop-blur-sm border border-white/20">
+                                <svg
+                                  className="w-8 h-8 sm:w-10 sm:h-10 text-sunshine-300"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                                </svg>
+                              </div>
                             </div>
-                            <div className="text-xs sm:text-sm font-medium text-neutral-200 tracking-wide uppercase">
-                              Artikel
+
+                            {/* Number */}
+                            <div className="text-center">
+                              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-sunshine-200 bg-clip-text text-transparent leading-tight">
+                                {visualizationsData.data.count.toLocaleString(
+                                  'id-ID'
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Label */}
+                            <div className="text-center space-y-1">
+                              <div className="text-sm sm:text-base font-semibold text-neutral-100 tracking-wide uppercase">
+                                Visualisasi
+                              </div>
+                              <div className="text-xs text-neutral-300/80">
+                                Grafik & Diagram Interaktif
+                              </div>
+                            </div>
+
+                            {/* Decorative Line */}
+                            <div className="flex justify-center pt-2">
+                              <div className="w-16 h-1 bg-gradient-to-r from-transparent via-sunshine-400/50 to-transparent rounded-full" />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {infographicsData && (
+                        <div className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300 sm:col-span-2">
+                          {/* Decorative Elements */}
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-data-400/20 rounded-full blur-3xl group-hover:blur-[100px] transition-all duration-300" />
+                          <div className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 w-24 h-24 border-4 border-white/10 rounded-full" />
+                          <div className="absolute -bottom-4 -left-4 sm:-bottom-8 sm:-left-8 w-20 h-20 border-2 border-white/10 rotate-45" />
+
+                          <div className="relative space-y-3">
+                            {/* Icon */}
+                            <div className="flex justify-center">
+                              <div className="p-3 bg-data-400/20 rounded-2xl backdrop-blur-sm border border-white/20">
+                                <svg
+                                  className="w-8 h-8 sm:w-10 sm:h-10 text-data-300"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                                </svg>
+                              </div>
+                            </div>
+
+                            {/* Number */}
+                            <div className="text-center">
+                              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-data-200 bg-clip-text text-transparent leading-tight">
+                                {infographicsData.data.count.toLocaleString(
+                                  'id-ID'
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Label */}
+                            <div className="text-center space-y-1">
+                              <div className="text-sm sm:text-base font-semibold text-neutral-100 tracking-wide uppercase">
+                                Infografik
+                              </div>
+                              <div className="text-xs text-neutral-300/80">
+                                Infografik Visual Menarik
+                              </div>
+                            </div>
+
+                            {/* Decorative Line */}
+                            <div className="flex justify-center pt-2">
+                              <div className="w-16 h-1 bg-gradient-to-r from-transparent via-data-400/50 to-transparent rounded-full" />
                             </div>
                           </div>
                         </div>
@@ -201,7 +318,9 @@ export default function OpenDataSection() {
                     rel="noopener noreferrer"
                     className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold bg-gradient-to-r from-neutral-50 to-neutral-100 text-data-800 hover:from-shrimp-400 hover:to-shrimp-500 hover:text-white shadow-[0_8px_24px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_32px_rgba(244,114,82,0.4)] transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
                   >
-                    <span className="text-base sm:text-lg">Kunjungi Portal Open Data</span>
+                    <span className="text-base sm:text-lg">
+                      Kunjungi Portal Open Data
+                    </span>
                     <svg
                       className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
                       fill="none"
@@ -216,35 +335,6 @@ export default function OpenDataSection() {
                       />
                     </svg>
                   </a>
-                </MotionDiv>
-
-                {/* Image Section - Enhanced */}
-                <MotionDiv
-                  className="pt-8 pb-4 px-1"
-                  variants={scaleInVariants}
-                  transition={{ delay: 0.8 }}
-                >
-                  <div className="relative group px-6 py-6">
-                    {/* Decorative background */}
-                    <div className="absolute -inset-4 bg-gradient-to-r from-shrimp-400/30 to-sunshine-400/20 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-300" />
-
-                    {/* Image container */}
-                    <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl p-3 shadow-[0_12px_40px_rgba(0,0,0,0.4)]">
-                      <div className="overflow-hidden rounded-xl">
-                        <Image
-                          src="/beranda-opendata.png"
-                          alt="Open Data Portal Cirebon"
-                          width={800}
-                          height={400}
-                          className="w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Corner decoration */}
-                    <div className="absolute -top-2 -right-2 w-20 h-20 border-4 border-shrimp-400/40 rounded-2xl rotate-12" />
-                    <div className="absolute -bottom-3 -left-3 w-16 h-16 bg-sunshine-400/30 rounded-full blur-md" />
-                  </div>
                 </MotionDiv>
               </div>
             </MotionDiv>
@@ -274,46 +364,171 @@ export default function OpenDataSection() {
                   Cirebon.
                 </MotionP>
 
-                {/* Stats */}
+                {/* Stats - Infographic Style */}
                 <MotionDiv
                   className="mt-6"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.6 }}
                 >
-                  {datasetsLoading || articlesLoading ? (
+                  {datasetsLoading ||
+                  visualizationsLoading ||
+                  infographicsLoading ? (
                     <div className="text-neutral-200 text-sm">
                       Memuat data...
                     </div>
-                  ) : datasetsData || articlesData ? (
-                    <div className="grid grid-cols-2 gap-4">
-                      {datasetsData && (
+                  ) : datasetsData || visualizationsData || infographicsData ? (
+                    <div className="space-y-4 p-2">
+                      <div className="grid grid-cols-2 gap-4">
+                        {datasetsData && (
+                          <MotionDiv
+                            className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
+                            variants={scaleInVariants}
+                            transition={{ delay: 0.8 }}
+                          >
+                            {/* Decorative Elements */}
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-shrimp-400/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
+                            <div className="absolute -bottom-4 -right-4 w-20 h-20 border-4 border-white/10 rounded-full" />
+
+                            <div className="relative space-y-3">
+                              {/* Icon */}
+                              <div className="flex justify-center">
+                                <div className="p-2.5 bg-shrimp-400/20 rounded-xl backdrop-blur-sm border border-white/20">
+                                  <svg
+                                    className="w-7 h-7 text-shrimp-300"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z" />
+                                    <path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z" />
+                                    <path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z" />
+                                  </svg>
+                                </div>
+                              </div>
+
+                              {/* Number */}
+                              <div className="text-center">
+                                <div className="text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-shrimp-200 bg-clip-text text-transparent leading-tight">
+                                  {datasetsData.data.count.toLocaleString(
+                                    'id-ID'
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Label */}
+                              <div className="text-center space-y-1">
+                                <div className="text-sm font-semibold text-neutral-100 tracking-wide uppercase">
+                                  Dataset
+                                </div>
+                                <div className="text-xs text-neutral-300/80">
+                                  Data Terbuka
+                                </div>
+                              </div>
+
+                              {/* Decorative Line */}
+                              <div className="flex justify-center pt-1">
+                                <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-shrimp-400/50 to-transparent rounded-full" />
+                              </div>
+                            </div>
+                          </MotionDiv>
+                        )}
+                        {visualizationsData && (
+                          <MotionDiv
+                            className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
+                            variants={scaleInVariants}
+                            transition={{ delay: 1.0 }}
+                          >
+                            {/* Decorative Elements */}
+                            <div className="absolute bottom-0 left-0 w-24 h-24 bg-sunshine-400/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
+                            <div className="absolute -top-4 -left-4 w-20 h-20 border-4 border-white/10 rounded-full" />
+
+                            <div className="relative space-y-3">
+                              {/* Icon */}
+                              <div className="flex justify-center">
+                                <div className="p-2.5 bg-sunshine-400/20 rounded-xl backdrop-blur-sm border border-white/20">
+                                  <svg
+                                    className="w-7 h-7 text-sunshine-300"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                                  </svg>
+                                </div>
+                              </div>
+
+                              {/* Number */}
+                              <div className="text-center">
+                                <div className="text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-sunshine-200 bg-clip-text text-transparent leading-tight">
+                                  {visualizationsData.data.count.toLocaleString(
+                                    'id-ID'
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Label */}
+                              <div className="text-center space-y-1">
+                                <div className="text-sm font-semibold text-neutral-100 tracking-wide uppercase">
+                                  Visualisasi
+                                </div>
+                                <div className="text-xs text-neutral-300/80">
+                                  Grafik & Diagram
+                                </div>
+                              </div>
+
+                              {/* Decorative Line */}
+                              <div className="flex justify-center pt-1">
+                                <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-sunshine-400/50 to-transparent rounded-full" />
+                              </div>
+                            </div>
+                          </MotionDiv>
+                        )}
+                      </div>
+                      {infographicsData && (
                         <MotionDiv
-                          className="bg-neutral-50/10 backdrop-blur-sm rounded-lg p-4 border border-neutral-100/20"
+                          className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
                           variants={scaleInVariants}
-                          transition={{ delay: 0.8 }}
+                          transition={{ delay: 1.2 }}
                         >
-                          <div className="text-center">
-                            <div className="text-3xl font-bold text-neutral-50 mb-2">
-                              {datasetsData.data.count.toLocaleString('id-ID')}
+                          {/* Decorative Elements */}
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-data-400/20 rounded-full blur-3xl group-hover:blur-[80px] transition-all duration-300" />
+                          <div className="absolute -top-4 -right-4 w-20 h-20 border-4 border-white/10 rounded-full" />
+                          <div className="absolute -bottom-4 -left-4 w-16 h-16 border-2 border-white/10 rotate-45" />
+
+                          <div className="relative space-y-3">
+                            {/* Icon */}
+                            <div className="flex justify-center">
+                              <div className="p-2.5 bg-data-400/20 rounded-xl backdrop-blur-sm border border-white/20">
+                                <svg
+                                  className="w-7 h-7 text-data-300"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                                </svg>
+                              </div>
                             </div>
-                            <div className="text-sm text-neutral-100">
-                              Dataset
+
+                            {/* Number */}
+                            <div className="text-center">
+                              <div className="text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-data-200 bg-clip-text text-transparent leading-tight">
+                                {infographicsData.data.count.toLocaleString(
+                                  'id-ID'
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        </MotionDiv>
-                      )}
-                      {articlesData && (
-                        <MotionDiv
-                          className="bg-neutral-50/10 backdrop-blur-sm rounded-lg p-4 border border-neutral-100/20"
-                          variants={scaleInVariants}
-                          transition={{ delay: 1.0 }}
-                        >
-                          <div className="text-center">
-                            <div className="text-3xl font-bold text-neutral-50 mb-2">
-                              {articlesData.data.count.toLocaleString('id-ID')}
+
+                            {/* Label */}
+                            <div className="text-center space-y-1">
+                              <div className="text-sm font-semibold text-neutral-100 tracking-wide uppercase">
+                                Infografik
+                              </div>
+                              <div className="text-xs text-neutral-300/80">
+                                Infografik Visual Menarik
+                              </div>
                             </div>
-                            <div className="text-sm text-neutral-100">
-                              Artikel
+
+                            {/* Decorative Line */}
+                            <div className="flex justify-center pt-1">
+                              <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-data-400/50 to-transparent rounded-full" />
                             </div>
                           </div>
                         </MotionDiv>

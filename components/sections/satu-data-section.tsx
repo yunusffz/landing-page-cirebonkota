@@ -64,8 +64,8 @@ export default function SatuDataSection() {
 
       <MotionSection
         id="satu-data"
-        className="relative min-h-screen bg-gradient-to-br from-data-50 via-neutral-50 to-data-100 text-navy-700"
-        style={{ height: sectionHeight }}
+        className="relative min-h-screen bg-gradient-to-br from-data-50 via-neutral-50 to-data-100 text-navy-700 lg:h-auto"
+        style={{ height: typeof window !== 'undefined' && window.innerWidth >= 1024 ? sectionHeight : 'auto' }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -117,17 +117,17 @@ export default function SatuDataSection() {
                     variants={fadeInUpVariants}
                     transition={{ delay: 0.4 }}
                   >
-                    Portal pengelolaan data bagi Produsen Data Cirebon Satu Data.
-                    Melalui portal ini, produsen data dapat saling berbagi dan
-                    memanfaatkan data yang akurat, terstandar, serta mudah diakses
-                    untuk mendukung perumusan kebijakan yang lebih terukur di
-                    lingkungan Pemerintah Kota Cirebon.
+                    Portal pengelolaan data bagi Produsen Data Cirebon Satu
+                    Data. Melalui portal ini, produsen data dapat saling berbagi
+                    dan memanfaatkan data yang akurat, terstandar, serta mudah
+                    diakses untuk mendukung perumusan kebijakan yang lebih
+                    terukur di lingkungan Pemerintah Kota Cirebon.
                   </MotionP>
                 </div>
 
                 {/* Feature Highlights */}
                 <MotionDiv
-                  className="py-4"
+                  className="py-4 px-2"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.5 }}
                 >
@@ -139,14 +139,26 @@ export default function SatuDataSection() {
                     <div className="relative space-y-3">
                       <div className="flex items-start gap-3">
                         <div className="mt-1 p-2 bg-data-500/10 rounded-lg">
-                          <svg className="w-5 h-5 text-data-600" fill="currentColor" viewBox="0 0 20 20">
+                          <svg
+                            className="w-5 h-5 text-data-600"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
                             <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                            <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                            <path
+                              fillRule="evenodd"
+                              d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                              clipRule="evenodd"
+                            />
                           </svg>
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-navy-700 text-sm">Data Terstandar</h3>
-                          <p className="text-xs text-neutral-700 mt-1">Integrasi dan standarisasi data berkualitas</p>
+                          <h3 className="font-semibold text-navy-700 text-sm">
+                            Data Terstandar
+                          </h3>
+                          <p className="text-xs text-neutral-700 mt-1">
+                            Integrasi dan standarisasi data berkualitas
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -165,7 +177,9 @@ export default function SatuDataSection() {
                     rel="noopener noreferrer"
                     className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-shrimp-400 to-shrimp-500 hover:from-shrimp-500 hover:to-shrimp-600 text-white font-semibold rounded-xl shadow-[0_8px_24px_rgba(244,114,82,0.25)] hover:shadow-[0_12px_32px_rgba(244,114,82,0.35)] transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
                   >
-                    <span className="text-base sm:text-lg">Kunjungi Portal Satu Data</span>
+                    <span className="text-base sm:text-lg">
+                      Kunjungi Portal Satu Data
+                    </span>
                     <svg
                       className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
                       fill="none"
@@ -184,7 +198,7 @@ export default function SatuDataSection() {
 
                 {/* Image Section - Enhanced */}
                 <MotionDiv
-                  className="pt-8 pb-4 px-1"
+                  className=" pb-4 px-1"
                   variants={scaleInVariants}
                   transition={{ delay: 0.8 }}
                 >
