@@ -105,7 +105,9 @@ export default function OpenDataSection() {
         id="open-data"
         className="relative min-h-screen bg-gradient-to-br from-data-700 via-data-800 to-data-900"
         style={
-          isMounted && isDesktop && sectionHeight ? { height: sectionHeight } : undefined
+          isMounted && isDesktop && sectionHeight
+            ? { height: sectionHeight }
+            : undefined
         }
         initial="hidden"
         whileInView="visible"
@@ -336,9 +338,9 @@ export default function OpenDataSection() {
                     href="https://opendata.cirebonkota.go.id/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold bg-gradient-to-r from-neutral-50 to-neutral-100 text-data-800 hover:from-shrimp-400 hover:to-shrimp-500 hover:text-white shadow-[0_8px_24px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_32px_rgba(244,114,82,0.4)] transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
+                    className="sm:w-[350px] group w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold bg-gradient-to-r from-neutral-50 to-neutral-100 text-data-800 hover:from-shrimp-400 hover:to-shrimp-500 hover:text-white shadow-[0_8px_24px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_32px_rgba(244,114,82,0.4)] transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
                   >
-                    <span className="text-base sm:text-lg">
+                    <span className="text-base sm:text-lg ">
                       Kunjungi Portal Open Data
                     </span>
                     <svg

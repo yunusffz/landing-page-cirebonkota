@@ -15,7 +15,9 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function SatuDataSection() {
   const imagesContainerRef = useRef<HTMLDivElement>(null);
-  const [sectionHeight, setSectionHeight] = useState<string | undefined>(undefined);
+  const [sectionHeight, setSectionHeight] = useState<string | undefined>(
+    undefined
+  );
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -72,7 +74,9 @@ export default function SatuDataSection() {
       <MotionSection
         id="satu-data"
         className="relative min-h-screen bg-gradient-to-br from-data-50 via-neutral-50 to-data-100 text-navy-700 lg:h-auto"
-        style={isMounted && sectionHeight ? { height: sectionHeight } : undefined}
+        style={
+          isMounted && sectionHeight ? { height: sectionHeight } : undefined
+        }
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -182,7 +186,7 @@ export default function SatuDataSection() {
                     href="https://satudata.cirebonkota.go.id/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-shrimp-400 to-shrimp-500 hover:from-shrimp-500 hover:to-shrimp-600 text-white font-semibold rounded-xl shadow-[0_8px_24px_rgba(244,114,82,0.25)] hover:shadow-[0_12px_32px_rgba(244,114,82,0.35)] transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
+                    className="sm:w-[350px] group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-shrimp-400 to-shrimp-500 hover:from-shrimp-500 hover:to-shrimp-600 text-white font-semibold rounded-xl shadow-[0_8px_24px_rgba(244,114,82,0.25)] hover:shadow-[0_12px_32px_rgba(244,114,82,0.35)] transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
                   >
                     <span className="text-base sm:text-lg">
                       Kunjungi Portal Satu Data
@@ -205,30 +209,30 @@ export default function SatuDataSection() {
 
                 {/* Image Section - Enhanced */}
                 <MotionDiv
-                  className=" pb-4 px-1"
+                  className="pb-4 px-1 text-center flex justify-center overflow-hidden"
                   variants={scaleInVariants}
                   transition={{ delay: 0.8 }}
                 >
-                  <div className="relative group px-6 py-6">
-                    {/* Decorative background */}
-                    <div className="absolute -inset-4 bg-gradient-to-r from-data-300/30 to-shrimp-300/30 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative group w-full sm:w-auto max-h-[300px] h-auto overflow-hidden">
+                    {/* Decorative background - contained within bounds */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-data-300/30 to-shrimp-300/30 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-300" />
 
                     {/* Image container */}
-                    <div className="relative bg-white/40 backdrop-blur-sm rounded-2xl p-3 shadow-[0_12px_40px_rgba(0,0,0,0.12)]">
-                      <div className="overflow-hidden rounded-xl">
+                    <div className="relative bg-white/40 backdrop-blur-sm rounded-2xl p-3 shadow-[0_12px_40px_rgba(0,0,0,0.12)] h-full flex items-center justify-center">
+                      <div className="overflow-hidden rounded-xl w-full h-full max-h-[260px]">
                         <Image
                           src="/beranda-satudata-1.png"
                           alt="Satu Data Portal Cirebon"
                           width={800}
                           height={600}
-                          className="w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full max-h-[260px] object-contain transform group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
                     </div>
 
-                    {/* Corner decoration */}
-                    <div className="absolute -top-2 -right-2 w-20 h-20 border-4 border-data-400/40 rounded-2xl rotate-12" />
-                    <div className="absolute -bottom-3 -left-3 w-16 h-16 bg-shrimp-400/20 rounded-full blur-md" />
+                    {/* Corner decoration - positioned within bounds */}
+                    <div className="absolute top-1 right-1 w-16 h-16 border-4 border-data-400/40 rounded-2xl rotate-12" />
+                    <div className="absolute bottom-1 left-1 w-12 h-12 bg-shrimp-400/20 rounded-full blur-md" />
                   </div>
                 </MotionDiv>
               </div>
