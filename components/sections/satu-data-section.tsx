@@ -15,9 +15,16 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function SatuDataSection() {
   const imagesContainerRef = useRef<HTMLDivElement>(null);
-  const [sectionHeight, setSectionHeight] = useState('1827px');
+  const [sectionHeight, setSectionHeight] = useState<string | undefined>(undefined);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     const updateHeight = () => {
       if (imagesContainerRef.current) {
         const height = imagesContainerRef.current.scrollHeight;
@@ -37,7 +44,7 @@ export default function SatuDataSection() {
       if (images)
         images.forEach(img => img.removeEventListener('load', updateHeight));
     };
-  }, []);
+  }, [isMounted]);
 
   return (
     <>
@@ -65,7 +72,7 @@ export default function SatuDataSection() {
       <MotionSection
         id="satu-data"
         className="relative min-h-screen bg-gradient-to-br from-data-50 via-neutral-50 to-data-100 text-navy-700 lg:h-auto"
-        style={{ height: typeof window !== 'undefined' && window.innerWidth >= 1024 ? sectionHeight : 'auto' }}
+        style={isMounted && sectionHeight ? { height: sectionHeight } : undefined}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}

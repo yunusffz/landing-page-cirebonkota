@@ -18,7 +18,11 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function OpenDataSection() {
   const imagesContainerRef = useRef<HTMLDivElement>(null);
-  const [sectionHeight, setSectionHeight] = useState('1827px');
+  const [sectionHeight, setSectionHeight] = useState<string | undefined>(
+    undefined
+  );
+  const [isMounted, setIsMounted] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const { data: datasetsData, isLoading: datasetsLoading } = useDatasets();
   const { data: visualizationsData, isLoading: visualizationsLoading } =
     useVisualizations();
@@ -26,6 +30,20 @@ export default function OpenDataSection() {
     useInfographics();
 
   useEffect(() => {
+    setIsMounted(true);
+    setIsDesktop(window.innerWidth >= 1024);
+
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || !isDesktop) return;
+
     const updateHeight = () => {
       if (imagesContainerRef.current) {
         const height = imagesContainerRef.current.scrollHeight;
@@ -43,7 +61,7 @@ export default function OpenDataSection() {
       if (images)
         images.forEach(img => img.removeEventListener('load', updateHeight));
     };
-  }, []);
+  }, [isMounted, isDesktop]);
 
   return (
     <>
@@ -85,8 +103,10 @@ export default function OpenDataSection() {
 
       <MotionSection
         id="open-data"
-        className="relative min-h-screen bg-gradient-to-br from-data-700 via-data-800 to-data-900 lg:h-auto"
-        style={{ height: typeof window !== 'undefined' && window.innerWidth >= 1024 ? sectionHeight : 'auto' }}
+        className="relative min-h-screen bg-gradient-to-br from-data-700 via-data-800 to-data-900"
+        style={
+          isMounted && isDesktop && sectionHeight ? { height: sectionHeight } : undefined
+        }
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -343,10 +363,10 @@ export default function OpenDataSection() {
           {/* Desktop layout */}
           <div className="lg:grid-cols-2 gap-8 lg:gap-12 h-full hidden lg:grid">
             <MotionDiv
-              className="sticky top-20 flex flex-col justify-center h-[calc(100vh-80px)]"
+              className="sticky top-20 flex flex-col justify-center h-[calc(100vh-80px)] overflow-y-auto"
               variants={fadeInLeftVariants}
             >
-              <div className="space-y-6">
+              <div className="space-y-4 xl:space-y-6">
                 <AnimatedText
                   text="Open Data Kota Cirebon"
                   className="text-5xl font-bold text-neutral-50 font-lora leading-16"
@@ -366,7 +386,7 @@ export default function OpenDataSection() {
 
                 {/* Stats - Infographic Style */}
                 <MotionDiv
-                  className="mt-6"
+                  className="mt-4 xl:mt-6"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.6 }}
                 >
@@ -377,11 +397,11 @@ export default function OpenDataSection() {
                       Memuat data...
                     </div>
                   ) : datasetsData || visualizationsData || infographicsData ? (
-                    <div className="space-y-4 p-2">
-                      <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-3 xl:space-y-4 p-2">
+                      <div className="grid grid-cols-2 gap-3 xl:gap-4">
                         {datasetsData && (
                           <MotionDiv
-                            className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
+                            className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 xl:p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
                             variants={scaleInVariants}
                             transition={{ delay: 0.8 }}
                           >
@@ -389,12 +409,12 @@ export default function OpenDataSection() {
                             <div className="absolute top-0 right-0 w-24 h-24 bg-shrimp-400/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
                             <div className="absolute -bottom-4 -right-4 w-20 h-20 border-4 border-white/10 rounded-full" />
 
-                            <div className="relative space-y-3">
+                            <div className="relative space-y-2 xl:space-y-3">
                               {/* Icon */}
                               <div className="flex justify-center">
-                                <div className="p-2.5 bg-shrimp-400/20 rounded-xl backdrop-blur-sm border border-white/20">
+                                <div className="p-2 xl:p-2.5 bg-shrimp-400/20 rounded-xl backdrop-blur-sm border border-white/20">
                                   <svg
-                                    className="w-7 h-7 text-shrimp-300"
+                                    className="w-6 h-6 xl:w-7 xl:h-7 text-shrimp-300"
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                   >
@@ -407,7 +427,7 @@ export default function OpenDataSection() {
 
                               {/* Number */}
                               <div className="text-center">
-                                <div className="text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-shrimp-200 bg-clip-text text-transparent leading-tight">
+                                <div className="text-3xl xl:text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-shrimp-200 bg-clip-text text-transparent leading-tight">
                                   {datasetsData.data.count.toLocaleString(
                                     'id-ID'
                                   )}
@@ -415,8 +435,8 @@ export default function OpenDataSection() {
                               </div>
 
                               {/* Label */}
-                              <div className="text-center space-y-1">
-                                <div className="text-sm font-semibold text-neutral-100 tracking-wide uppercase">
+                              <div className="text-center space-y-0.5 xl:space-y-1">
+                                <div className="text-xs xl:text-sm font-semibold text-neutral-100 tracking-wide uppercase">
                                   Dataset
                                 </div>
                                 <div className="text-xs text-neutral-300/80">
@@ -425,7 +445,7 @@ export default function OpenDataSection() {
                               </div>
 
                               {/* Decorative Line */}
-                              <div className="flex justify-center pt-1">
+                              <div className="flex justify-center pt-0.5 xl:pt-1">
                                 <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-shrimp-400/50 to-transparent rounded-full" />
                               </div>
                             </div>
@@ -433,7 +453,7 @@ export default function OpenDataSection() {
                         )}
                         {visualizationsData && (
                           <MotionDiv
-                            className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
+                            className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 xl:p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
                             variants={scaleInVariants}
                             transition={{ delay: 1.0 }}
                           >
@@ -441,12 +461,12 @@ export default function OpenDataSection() {
                             <div className="absolute bottom-0 left-0 w-24 h-24 bg-sunshine-400/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
                             <div className="absolute -top-4 -left-4 w-20 h-20 border-4 border-white/10 rounded-full" />
 
-                            <div className="relative space-y-3">
+                            <div className="relative space-y-2 xl:space-y-3">
                               {/* Icon */}
                               <div className="flex justify-center">
-                                <div className="p-2.5 bg-sunshine-400/20 rounded-xl backdrop-blur-sm border border-white/20">
+                                <div className="p-2 xl:p-2.5 bg-sunshine-400/20 rounded-xl backdrop-blur-sm border border-white/20">
                                   <svg
-                                    className="w-7 h-7 text-sunshine-300"
+                                    className="w-6 h-6 xl:w-7 xl:h-7 text-sunshine-300"
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                   >
@@ -457,7 +477,7 @@ export default function OpenDataSection() {
 
                               {/* Number */}
                               <div className="text-center">
-                                <div className="text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-sunshine-200 bg-clip-text text-transparent leading-tight">
+                                <div className="text-3xl xl:text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-sunshine-200 bg-clip-text text-transparent leading-tight">
                                   {visualizationsData.data.count.toLocaleString(
                                     'id-ID'
                                   )}
@@ -465,8 +485,8 @@ export default function OpenDataSection() {
                               </div>
 
                               {/* Label */}
-                              <div className="text-center space-y-1">
-                                <div className="text-sm font-semibold text-neutral-100 tracking-wide uppercase">
+                              <div className="text-center space-y-0.5 xl:space-y-1">
+                                <div className="text-xs xl:text-sm font-semibold text-neutral-100 tracking-wide uppercase">
                                   Visualisasi
                                 </div>
                                 <div className="text-xs text-neutral-300/80">
@@ -475,7 +495,7 @@ export default function OpenDataSection() {
                               </div>
 
                               {/* Decorative Line */}
-                              <div className="flex justify-center pt-1">
+                              <div className="flex justify-center pt-0.5 xl:pt-1">
                                 <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-sunshine-400/50 to-transparent rounded-full" />
                               </div>
                             </div>
@@ -484,7 +504,7 @@ export default function OpenDataSection() {
                       </div>
                       {infographicsData && (
                         <MotionDiv
-                          className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
+                          className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 xl:p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
                           variants={scaleInVariants}
                           transition={{ delay: 1.2 }}
                         >
@@ -493,12 +513,12 @@ export default function OpenDataSection() {
                           <div className="absolute -top-4 -right-4 w-20 h-20 border-4 border-white/10 rounded-full" />
                           <div className="absolute -bottom-4 -left-4 w-16 h-16 border-2 border-white/10 rotate-45" />
 
-                          <div className="relative space-y-3">
+                          <div className="relative space-y-2 xl:space-y-3">
                             {/* Icon */}
                             <div className="flex justify-center">
-                              <div className="p-2.5 bg-data-400/20 rounded-xl backdrop-blur-sm border border-white/20">
+                              <div className="p-2 xl:p-2.5 bg-data-400/20 rounded-xl backdrop-blur-sm border border-white/20">
                                 <svg
-                                  className="w-7 h-7 text-data-300"
+                                  className="w-6 h-6 xl:w-7 xl:h-7 text-data-300"
                                   fill="currentColor"
                                   viewBox="0 0 20 20"
                                 >
@@ -509,7 +529,7 @@ export default function OpenDataSection() {
 
                             {/* Number */}
                             <div className="text-center">
-                              <div className="text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-data-200 bg-clip-text text-transparent leading-tight">
+                              <div className="text-3xl xl:text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-data-200 bg-clip-text text-transparent leading-tight">
                                 {infographicsData.data.count.toLocaleString(
                                   'id-ID'
                                 )}
@@ -517,8 +537,8 @@ export default function OpenDataSection() {
                             </div>
 
                             {/* Label */}
-                            <div className="text-center space-y-1">
-                              <div className="text-sm font-semibold text-neutral-100 tracking-wide uppercase">
+                            <div className="text-center space-y-0.5 xl:space-y-1">
+                              <div className="text-xs xl:text-sm font-semibold text-neutral-100 tracking-wide uppercase">
                                 Infografik
                               </div>
                               <div className="text-xs text-neutral-300/80">
@@ -527,7 +547,7 @@ export default function OpenDataSection() {
                             </div>
 
                             {/* Decorative Line */}
-                            <div className="flex justify-center pt-1">
+                            <div className="flex justify-center pt-0.5 xl:pt-1">
                               <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-data-400/50 to-transparent rounded-full" />
                             </div>
                           </div>
@@ -539,7 +559,7 @@ export default function OpenDataSection() {
 
                 {/* CTA Button */}
                 <MotionDiv
-                  className="mt-8"
+                  className="mt-4 xl:mt-8"
                   variants={fadeInUpVariants}
                   transition={{ delay: 1.2 }}
                 >

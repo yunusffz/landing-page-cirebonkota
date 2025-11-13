@@ -16,7 +16,10 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function SatuPetaSection() {
   const imagesContainerRef = useRef<HTMLDivElement>(null);
-  const [sectionHeight, setSectionHeight] = useState('1827px');
+  const [sectionHeight, setSectionHeight] = useState<string | undefined>(
+    undefined
+  );
+  const [isMounted, setIsMounted] = useState(false);
   const {
     data: mapsetsData,
     isLoading: mapsetsLoading,
@@ -24,6 +27,12 @@ export default function SatuPetaSection() {
   } = useMapsets();
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     const updateHeight = () => {
       if (imagesContainerRef.current) {
         const height = imagesContainerRef.current.scrollHeight;
@@ -40,7 +49,7 @@ export default function SatuPetaSection() {
       if (images)
         images.forEach(img => img.removeEventListener('load', updateHeight));
     };
-  }, []);
+  }, [isMounted]);
 
   return (
     <>
@@ -68,7 +77,9 @@ export default function SatuPetaSection() {
       <MotionSection
         id="satu-peta"
         className="relative min-h-screen bg-gradient-to-br from-sunshine-100 via-sunshine-50 to-shrimp-100 text-navy-700 lg:h-auto"
-        style={{ height: typeof window !== 'undefined' && window.innerWidth >= 1024 ? sectionHeight : 'auto' }}
+        style={
+          isMounted && sectionHeight ? { height: sectionHeight } : undefined
+        }
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -369,7 +380,7 @@ export default function SatuPetaSection() {
                 variants={scaleInVariants}
               >
                 <Image
-                  src="/beranda-satupeta.png"
+                  src="/satupeta-0.png"
                   alt="Satu Peta Portal"
                   width={800}
                   height={600}

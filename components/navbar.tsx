@@ -14,6 +14,11 @@ export function Navbar({ className }: NavbarProps) {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [activeSection, setActiveSection] = React.useState<string>('');
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Smooth scroll handler for navigation links
   const handleSmoothScroll = (
@@ -34,6 +39,8 @@ export function Navbar({ className }: NavbarProps) {
   };
 
   React.useEffect(() => {
+    if (!isMounted) return;
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
 
@@ -79,10 +86,12 @@ export function Navbar({ className }: NavbarProps) {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMounted]);
 
   // Intersection Observer for active section detection
   React.useEffect(() => {
+    if (!isMounted) return;
+
     const observerOptions = {
       root: null,
       rootMargin: '-10% 0px -10% 0px',
@@ -95,7 +104,6 @@ export function Navbar({ className }: NavbarProps) {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const sectionId = entry.target.id;
-          console.log('Active section:', sectionId); // Debug log
           setActiveSection(sectionId);
           hasIntersectingSection = true;
         }
@@ -112,25 +120,28 @@ export function Navbar({ className }: NavbarProps) {
       observerOptions
     );
 
+    // Track observed elements without modifying DOM
+    const observedElements = new Set<Element>();
+
     // Use MutationObserver to watch for when sections are added
     const mutationObserver = new MutationObserver(() => {
       const openDataSection = document.getElementById('open-data');
       const satuDataSection = document.getElementById('satu-data');
       const satuPetaSection = document.getElementById('satu-peta');
 
-      if (openDataSection && !openDataSection.hasAttribute('data-observed')) {
+      if (openDataSection && !observedElements.has(openDataSection)) {
         observer.observe(openDataSection);
-        openDataSection.setAttribute('data-observed', 'true');
+        observedElements.add(openDataSection);
       }
 
-      if (satuDataSection && !satuDataSection.hasAttribute('data-observed')) {
+      if (satuDataSection && !observedElements.has(satuDataSection)) {
         observer.observe(satuDataSection);
-        satuDataSection.setAttribute('data-observed', 'true');
+        observedElements.add(satuDataSection);
       }
 
-      if (satuPetaSection && !satuPetaSection.hasAttribute('data-observed')) {
+      if (satuPetaSection && !observedElements.has(satuPetaSection)) {
         observer.observe(satuPetaSection);
-        satuPetaSection.setAttribute('data-observed', 'true');
+        observedElements.add(satuPetaSection);
       }
     });
 
@@ -147,27 +158,22 @@ export function Navbar({ className }: NavbarProps) {
 
     if (openDataSection) {
       observer.observe(openDataSection);
-      openDataSection.setAttribute('data-observed', 'true');
+      observedElements.add(openDataSection);
     }
     if (satuDataSection) {
       observer.observe(satuDataSection);
-      satuDataSection.setAttribute('data-observed', 'true');
+      observedElements.add(satuDataSection);
     }
     if (satuPetaSection) {
       observer.observe(satuPetaSection);
-      satuPetaSection.setAttribute('data-observed', 'true');
+      observedElements.add(satuPetaSection);
     }
 
     return () => {
       mutationObserver.disconnect();
-      const openDataSection = document.getElementById('open-data');
-      const satuDataSection = document.getElementById('satu-data');
-      const satuPetaSection = document.getElementById('satu-peta');
-      if (openDataSection) observer.unobserve(openDataSection);
-      if (satuDataSection) observer.unobserve(satuDataSection);
-      if (satuPetaSection) observer.unobserve(satuPetaSection);
+      observer.disconnect();
     };
-  }, []);
+  }, [isMounted]);
 
   return (
     <header

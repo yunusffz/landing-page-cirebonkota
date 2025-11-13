@@ -34,7 +34,6 @@ export const useMapsets = () => {
   return useQuery({
     queryKey: ['mapsets'],
     queryFn: async (): Promise<MapsetsResponsesResponse> => {
-      console.log('Fetching mapsets data...');
       try {
         const result = await apiService.get<MapsetsResponsesResponse>(
           'mapset',
@@ -46,7 +45,6 @@ export const useMapsets = () => {
             },
           }
         );
-        console.log('Mapsets API response:', result);
         return result;
       } catch (error) {
         console.error('Mapsets API error:', error);
