@@ -21,6 +21,7 @@ Before running this application, make sure you have the following installed:
 - **PNPM**: Version 8.x or higher (recommended) or npm/yarn
 
 To install PNPM globally:
+
 ```bash
 npm install -g pnpm
 ```
@@ -41,6 +42,7 @@ pnpm install
 ```
 
 Or if you're using npm:
+
 ```bash
 npm install
 ```
@@ -50,13 +52,14 @@ npm install
 Create a `.env` file in the root directory with the following variables:
 
 ```env
-NEXT_PUBLIC_API_URL=https://opendata.cirebonkota.go.id/api
+NEXT_PUBLIC_API_URL=
 TURBOPACK=1
 NEXT_CACHE=false
 NEXT_DISABLE_CACHE=1
 ```
 
 **Environment Variables Explained:**
+
 - `NEXT_PUBLIC_API_URL`: The base URL for the Open Data API
 - `TURBOPACK`: Enable Turbopack for faster development builds
 - `NEXT_CACHE`: Disable Next.js caching (development)
@@ -69,6 +72,7 @@ pnpm dev
 ```
 
 Or with npm:
+
 ```bash
 npm run dev
 ```
@@ -104,11 +108,13 @@ landing-page-cirebonkota/
 ## Building for Production
 
 1. Create a production build:
+
 ```bash
 pnpm build
 ```
 
 2. Start the production server:
+
 ```bash
 pnpm start
 ```
@@ -135,6 +141,7 @@ The optimized application will be ready for deployment.
 ## API Integration
 
 The application fetches data from the Cirebon Kota Open Data API. All API calls are managed through:
+
 - React Query for caching and state management
 - Axios for HTTP requests
 - Custom query hooks in the `queries/` directory
@@ -142,13 +149,17 @@ The application fetches data from the Cirebon Kota Open Data API. All API calls 
 ## Troubleshooting
 
 ### Port already in use
+
 If port 3000 is already in use, you can specify a different port:
+
 ```bash
 pnpm dev -p 3001
 ```
 
 ### Build errors
+
 If you encounter build errors, try:
+
 ```bash
 # Clear Next.js cache
 rm -rf .next
@@ -162,7 +173,9 @@ pnpm build
 ```
 
 ### Type errors
+
 Ensure TypeScript dependencies are up to date:
+
 ```bash
 pnpm add -D typescript@latest @types/node@latest @types/react@latest
 ```
