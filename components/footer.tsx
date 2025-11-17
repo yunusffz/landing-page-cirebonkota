@@ -103,7 +103,7 @@ export function Footer({ className }: FooterProps) {
                 berbagai program inovatif untuk kemajuan Kota Cirebon.
               </p>
 
-              {/* Social Media */}
+              {/* Social Media Editable*/}
               <div className="flex space-x-4">
                 <a
                   href="https://www.instagram.com/pemdakotacrb/"

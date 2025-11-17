@@ -17,7 +17,7 @@ export default function HeroSection() {
   return (
     <MotionSection
       id="home"
-      className="relative flex items-center justify-center h-[calc(100vh-80px)] overflow-hidden text-navy-700"
+      className="relative flex items-center justify-center min-h-[calc(100vh-80px)] lg:h-[calc(100vh-80px)] overflow-hidden text-navy-700"
       initial="hidden"
       animate="visible"
       variants={staggerContainerVariants}
@@ -39,7 +39,7 @@ export default function HeroSection() {
       {/* <div className="absolute inset-0 bg-navy-900/10" /> */}
 
       {/* Content */}
-      <div className="relative z-10 container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 container max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:pt-20 lg:px-8">
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Text Content */}
           <MotionDiv variants={fadeInLeftVariants} className="w-full">

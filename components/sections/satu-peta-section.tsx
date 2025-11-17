@@ -34,9 +34,12 @@ export default function SatuPetaSection() {
     if (!isMounted) return;
 
     const updateHeight = () => {
-      if (imagesContainerRef.current) {
+      const isDesktop = window.innerWidth >= 1024;
+      if (isDesktop && imagesContainerRef.current) {
         const height = imagesContainerRef.current.scrollHeight;
         setSectionHeight(`${height}px`);
+      } else {
+        setSectionHeight(undefined);
       }
     };
     updateHeight();
@@ -216,7 +219,7 @@ export default function SatuPetaSection() {
                   transition={{ delay: 0.6 }}
                 >
                   <a
-                    href="https://satudata.cirebonkota.go.id/"
+                    href="https://satupeta.cirebonkota.go.id/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="sm:w-[350px] group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-shrimp-400 to-shrimp-500 hover:from-shrimp-500 hover:to-shrimp-600 text-white font-semibold rounded-xl shadow-[0_8px_24px_rgba(244,114,82,0.25)] hover:shadow-[0_12px_32px_rgba(244,114,82,0.35)] transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
@@ -269,7 +272,7 @@ export default function SatuPetaSection() {
 
                 {/* Mapset Count - Infographic Style */}
                 <MotionDiv
-                  className="mt-6 px-2"
+                  className="mt-6 px-2 [@media(min-height:600px)]:block hidden"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.6 }}
                 >

@@ -28,9 +28,12 @@ export default function SatuDataSection() {
     if (!isMounted) return;
 
     const updateHeight = () => {
-      if (imagesContainerRef.current) {
+      const isDesktop = window.innerWidth >= 1024;
+      if (isDesktop && imagesContainerRef.current) {
         const height = imagesContainerRef.current.scrollHeight;
         setSectionHeight(`${height}px`);
+      } else {
+        setSectionHeight(undefined);
       }
     };
 
