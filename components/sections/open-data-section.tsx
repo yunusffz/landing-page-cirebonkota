@@ -182,7 +182,7 @@ export default function OpenDataSection() {
                       Memuat data...
                     </div>
                   ) : datasetsData || visualizationsData || infographicsData ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-2">
                       {datasetsData && (
                         <div className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300">
                           {/* Decorative Elements */}
@@ -278,7 +278,7 @@ export default function OpenDataSection() {
                         </div>
                       )}
                       {infographicsData && (
-                        <div className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300 sm:col-span-2">
+                        <div className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300">
                           {/* Decorative Elements */}
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-data-400/20 rounded-full blur-3xl group-hover:blur-[100px] transition-all duration-300" />
                           <div className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 w-24 h-24 border-4 border-white/10 rounded-full" />
@@ -388,7 +388,7 @@ export default function OpenDataSection() {
 
                 {/* Stats - Infographic Style */}
                 <MotionDiv
-                  className="mt-4 xl:mt-6"
+                  className="mt-4 xl:mt-6 [@media(min-height:600px)]:block hidden"
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.6 }}
                 >
@@ -399,8 +399,8 @@ export default function OpenDataSection() {
                       Memuat data...
                     </div>
                   ) : datasetsData || visualizationsData || infographicsData ? (
-                    <div className="space-y-3 xl:space-y-4 p-2">
-                      <div className="grid grid-cols-2 gap-3 xl:gap-4">
+                    <div className="p-2">
+                      <div className="grid grid-cols-3 gap-3 xl:gap-4">
                         {datasetsData && (
                           <MotionDiv
                             className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 xl:p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
@@ -503,58 +503,58 @@ export default function OpenDataSection() {
                             </div>
                           </MotionDiv>
                         )}
+                        {infographicsData && (
+                          <MotionDiv
+                            className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 xl:p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
+                            variants={scaleInVariants}
+                            transition={{ delay: 1.2 }}
+                          >
+                            {/* Decorative Elements */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-data-400/20 rounded-full blur-3xl group-hover:blur-[80px] transition-all duration-300" />
+                            <div className="absolute -top-4 -right-4 w-20 h-20 border-4 border-white/10 rounded-full" />
+                            <div className="absolute -bottom-4 -left-4 w-16 h-16 border-2 border-white/10 rotate-45" />
+
+                            <div className="relative space-y-2 xl:space-y-3">
+                              {/* Icon */}
+                              <div className="flex justify-center">
+                                <div className="p-2 xl:p-2.5 bg-data-400/20 rounded-xl backdrop-blur-sm border border-white/20">
+                                  <svg
+                                    className="w-6 h-6 xl:w-7 xl:h-7 text-data-300"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                                  </svg>
+                                </div>
+                              </div>
+
+                              {/* Number */}
+                              <div className="text-center">
+                                <div className="text-3xl xl:text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-data-200 bg-clip-text text-transparent leading-tight">
+                                  {infographicsData.data.count.toLocaleString(
+                                    'id-ID'
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Label */}
+                              <div className="text-center space-y-0.5 xl:space-y-1">
+                                <div className="text-xs xl:text-sm font-semibold text-neutral-100 tracking-wide uppercase">
+                                  Infografik
+                                </div>
+                                <div className="text-xs text-neutral-300/80">
+                                  Infografik Visual Menarik
+                                </div>
+                              </div>
+
+                              {/* Decorative Line */}
+                              <div className="flex justify-center pt-0.5 xl:pt-1">
+                                <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-data-400/50 to-transparent rounded-full" />
+                              </div>
+                            </div>
+                          </MotionDiv>
+                        )}
                       </div>
-                      {infographicsData && (
-                        <MotionDiv
-                          className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 xl:p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
-                          variants={scaleInVariants}
-                          transition={{ delay: 1.2 }}
-                        >
-                          {/* Decorative Elements */}
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-data-400/20 rounded-full blur-3xl group-hover:blur-[80px] transition-all duration-300" />
-                          <div className="absolute -top-4 -right-4 w-20 h-20 border-4 border-white/10 rounded-full" />
-                          <div className="absolute -bottom-4 -left-4 w-16 h-16 border-2 border-white/10 rotate-45" />
-
-                          <div className="relative space-y-2 xl:space-y-3">
-                            {/* Icon */}
-                            <div className="flex justify-center">
-                              <div className="p-2 xl:p-2.5 bg-data-400/20 rounded-xl backdrop-blur-sm border border-white/20">
-                                <svg
-                                  className="w-6 h-6 xl:w-7 xl:h-7 text-data-300"
-                                  fill="currentColor"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-                                </svg>
-                              </div>
-                            </div>
-
-                            {/* Number */}
-                            <div className="text-center">
-                              <div className="text-3xl xl:text-4xl font-bold bg-gradient-to-br from-neutral-50 via-neutral-100 to-data-200 bg-clip-text text-transparent leading-tight">
-                                {infographicsData.data.count.toLocaleString(
-                                  'id-ID'
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Label */}
-                            <div className="text-center space-y-0.5 xl:space-y-1">
-                              <div className="text-xs xl:text-sm font-semibold text-neutral-100 tracking-wide uppercase">
-                                Infografik
-                              </div>
-                              <div className="text-xs text-neutral-300/80">
-                                Infografik Visual Menarik
-                              </div>
-                            </div>
-
-                            {/* Decorative Line */}
-                            <div className="flex justify-center pt-0.5 xl:pt-1">
-                              <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-data-400/50 to-transparent rounded-full" />
-                            </div>
-                          </div>
-                        </MotionDiv>
-                      )}
                     </div>
                   ) : null}
                 </MotionDiv>
