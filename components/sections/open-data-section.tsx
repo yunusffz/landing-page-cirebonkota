@@ -23,6 +23,7 @@ export default function OpenDataSection() {
   );
   const [isMounted, setIsMounted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isDirectHash, setIsDirectHash] = useState(false);
   const { data: datasetsData, isLoading: datasetsLoading } = useDatasets();
   const { data: visualizationsData, isLoading: visualizationsLoading } =
     useVisualizations();
@@ -33,6 +34,11 @@ export default function OpenDataSection() {
     setIsMounted(true);
     setIsDesktop(window.innerWidth >= 1024);
 
+    // Check if user directly accessed this section via hash
+    if (window.location.hash === '#open-data') {
+      setIsDirectHash(true);
+    }
+
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 1024);
     };
@@ -40,6 +46,10 @@ export default function OpenDataSection() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Determine if data is ready for animation
+  const isDataLoaded = !datasetsLoading && !visualizationsLoading && !infographicsLoading;
+  const shouldAnimate = isDirectHash && isDataLoaded;
 
   useEffect(() => {
     if (!isMounted || !isDesktop) return;
@@ -110,8 +120,9 @@ export default function OpenDataSection() {
             : undefined
         }
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        animate={shouldAnimate ? "visible" : undefined}
+        whileInView={!isDirectHash ? "visible" : undefined}
+        viewport={!isDirectHash ? { once: true, amount: 0.2 } : undefined}
         variants={staggerContainerVariants}
       >
         {/* Decorative Background Elements */}
@@ -145,6 +156,10 @@ export default function OpenDataSection() {
           <div className="lg:hidden">
             <MotionDiv
               className="flex flex-col py-12 min-h-screen"
+              initial="hidden"
+              animate={shouldAnimate ? "visible" : undefined}
+              whileInView={!isDirectHash ? "visible" : undefined}
+              viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
               variants={fadeInLeftVariants}
             >
               <div className="space-y-8 px-1">
@@ -172,6 +187,10 @@ export default function OpenDataSection() {
                 {/* Dataset, Visualization, and Infographic Count Display - Infographic Style */}
                 <MotionDiv
                   className="py-4"
+                  initial="hidden"
+                  animate={shouldAnimate ? "visible" : undefined}
+                  whileInView={!isDirectHash ? "visible" : undefined}
+                  viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.5 }}
                 >
@@ -331,6 +350,10 @@ export default function OpenDataSection() {
                 {/* CTA Button */}
                 <MotionDiv
                   className="py-2"
+                  initial="hidden"
+                  animate={shouldAnimate ? "visible" : undefined}
+                  whileInView={!isDirectHash ? "visible" : undefined}
+                  viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.6 }}
                 >
@@ -366,6 +389,10 @@ export default function OpenDataSection() {
           <div className="lg:grid-cols-2 gap-8 lg:gap-12 h-full hidden lg:grid">
             <MotionDiv
               className="sticky top-20 flex flex-col justify-center h-[calc(100vh-80px)] overflow-y-auto"
+              initial="hidden"
+              animate={shouldAnimate ? "visible" : undefined}
+              whileInView={!isDirectHash ? "visible" : undefined}
+              viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
               variants={fadeInLeftVariants}
             >
               <div className="space-y-4 xl:space-y-6">
@@ -389,6 +416,10 @@ export default function OpenDataSection() {
                 {/* Stats - Infographic Style */}
                 <MotionDiv
                   className="mt-4 xl:mt-6 [@media(min-height:600px)]:block hidden"
+                  initial="hidden"
+                  animate={shouldAnimate ? "visible" : undefined}
+                  whileInView={!isDirectHash ? "visible" : undefined}
+                  viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
                   variants={fadeInUpVariants}
                   transition={{ delay: 0.6 }}
                 >
@@ -404,6 +435,10 @@ export default function OpenDataSection() {
                         {datasetsData && (
                           <MotionDiv
                             className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 xl:p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
+                            initial="hidden"
+                            animate={shouldAnimate ? "visible" : undefined}
+                            whileInView={!isDirectHash ? "visible" : undefined}
+                            viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
                             variants={scaleInVariants}
                             transition={{ delay: 0.8 }}
                           >
@@ -456,6 +491,10 @@ export default function OpenDataSection() {
                         {visualizationsData && (
                           <MotionDiv
                             className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 xl:p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
+                            initial="hidden"
+                            animate={shouldAnimate ? "visible" : undefined}
+                            whileInView={!isDirectHash ? "visible" : undefined}
+                            viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
                             variants={scaleInVariants}
                             transition={{ delay: 1.0 }}
                           >
@@ -506,6 +545,10 @@ export default function OpenDataSection() {
                         {infographicsData && (
                           <MotionDiv
                             className="relative overflow-hidden bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 xl:p-6 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-[1.02] transition-transform duration-300"
+                            initial="hidden"
+                            animate={shouldAnimate ? "visible" : undefined}
+                            whileInView={!isDirectHash ? "visible" : undefined}
+                            viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
                             variants={scaleInVariants}
                             transition={{ delay: 1.2 }}
                           >
@@ -562,6 +605,10 @@ export default function OpenDataSection() {
                 {/* CTA Button */}
                 <MotionDiv
                   className="mt-4 xl:mt-8"
+                  initial="hidden"
+                  animate={shouldAnimate ? "visible" : undefined}
+                  whileInView={!isDirectHash ? "visible" : undefined}
+                  viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
                   variants={fadeInUpVariants}
                   transition={{ delay: 1.2 }}
                 >
@@ -595,11 +642,19 @@ export default function OpenDataSection() {
             <MotionDiv
               ref={imagesContainerRef}
               className="space-y-40 flex flex-col pt-[calc(50vh-200px-40px)] pb-[calc(50vh-250px)]"
+              initial="hidden"
+              animate={shouldAnimate ? "visible" : undefined}
+              whileInView={!isDirectHash ? "visible" : undefined}
+              viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
               variants={fadeInRightVariants}
               transition={{ delay: 0.8 }}
             >
               <MotionDiv
                 className="rounded-2xl overflow-hidden h-[400px]"
+                initial="hidden"
+                animate={shouldAnimate ? "visible" : undefined}
+                whileInView={!isDirectHash ? "visible" : undefined}
+                viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
                 variants={scaleInVariants}
               >
                 <Image
@@ -612,6 +667,10 @@ export default function OpenDataSection() {
               </MotionDiv>
               <MotionDiv
                 className="rounded-xl overflow-hidden h-[500px]"
+                initial="hidden"
+                animate={shouldAnimate ? "visible" : undefined}
+                whileInView={!isDirectHash ? "visible" : undefined}
+                viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
                 variants={scaleInVariants}
               >
                 <Image
@@ -624,6 +683,10 @@ export default function OpenDataSection() {
               </MotionDiv>
               <MotionDiv
                 className="rounded-xl overflow-hidden h-[500px]"
+                initial="hidden"
+                animate={shouldAnimate ? "visible" : undefined}
+                whileInView={!isDirectHash ? "visible" : undefined}
+                viewport={!isDirectHash ? { once: true, amount: 0.3 } : undefined}
                 variants={scaleInVariants}
               >
                 <Image

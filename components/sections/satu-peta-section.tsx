@@ -346,7 +346,7 @@ export default function SatuPetaSection() {
                   transition={{ delay: 0.8 }}
                 >
                   <a
-                    href="https://satudata.cirebonkota.go.id/"
+                    href="https://satupeta.cirebonkota.go.id/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center px-6 py-3 bg-shrimp-400 hover:bg-shrimp-500 text-neutral-50 font-semibold rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.08)] transform hover:-translate-y-0.5 transition-all duration-200"
